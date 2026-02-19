@@ -13,6 +13,10 @@
     // 使用 DLL 时定义导入
     #define PYOS_API __declspec(dllimport)
   #endif
+  #ifdef WIN7_COMPAT
+    #define _WIN32_WINNT 0x0601
+    #define WINVER 0x0601
+  #endif
 #else
   // 非 Windows 平台无需特殊处理
   #define PYOS_API

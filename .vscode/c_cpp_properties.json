@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/bit7z-msvc-2022/include/bit7z",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/env314/Lib/site-packages/pybind11/include",
+                "E:/Python314/include/*"
             ],
             "defines": [
                 "_DEBUG",

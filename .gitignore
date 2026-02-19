@@ -10,3 +10,6 @@ CMakeCache.txt
 
 #VS Code Configurations
 #.vscode/
+
+#Python Virtual Environment
+env*/
