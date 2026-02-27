@@ -10,6 +10,11 @@ If you want to use this program on Windows 7, please add "/DWIN7_COMPAT" opition
   #define WINVER 0X0601
 #endif
 
+//Enable bit7z auto format detection
+#ifndef BIT7Z_AUTO_FORMAT
+#define BIT7Z_AUTO_FORMAT
+#endif
+
 //C++ standard headers include
 #include <iostream>
 #include <fstream>
