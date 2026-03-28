@@ -19,9 +19,31 @@
             "windowsSdkVersion": "10.0.22621.0",
             "compilerPath": "E:\\MSVC\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe",
             "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cppStandard": "c++11",
             "intelliSenseMode": "windows-msvc-x64"
+        },
+        {"name": "Linux-GCC",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/bit7z-linux-gcc/include/**",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/env312/lib/python3.12/site-packages/pybind11/include/**",
+                "${workspaceFolder}/env312/lib64/python3.12/site-packages/pybind11/include/**",
+                "/usr/include/python3.12/**",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/bit7z-linux-gcc/include/bit7z"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-x64"
         }
+        
     ],
     "version": 4
 }
