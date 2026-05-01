@@ -1,3 +1,10 @@
+/*
+This file binds the BitFileCompressor, the file compressor of bit7z.
+Author: ZhouSicheng-2011
+Time: 2026-05-01
+License: This project is under the Apache-2.0 Lincense, see LICENSE for more details.
+*/
+
 //bit7z header
 #include <bitfilecompressor.hpp>
 //Special Config
