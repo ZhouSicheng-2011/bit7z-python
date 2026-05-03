@@ -1,11 +1,9 @@
 /*
-This file binds the Bit7zLibrary, the DLL provider of bit7z.
-(bit7z uses it to call the DLL of 7-zip, like 7z.dll, 7za.dll and so on)
-(For more details, see website https://github.com/rikyoz/bit7z/wiki/7z-DLLs)
-(To get the extra DLLs, download 7z-extra package from https://www.7-zip.org/a/7z2600-extra.7z)
-(Want other versions of 7-zip DLLs? Use the version number you want to replace "2600" in the above URL, for example, "2501" for 7-zip 25.01)
+This file binds the BitInFormat and BitInOutFormat, the format provider of bit7z.
+(bit7z uses it to know the format of the archive)
+(For more details, see website https://github.com/rikyoz/bit7z/wiki/BitFormat)
 Author: ZhouSicheng-2011
-Time: 2026-02-26
+Time: 2026-05-03
 License: This project is under the Apache-2.0 Lincense, see LICENSE for more details.
 */
 
@@ -60,5 +58,26 @@ void init_formats(py::module mod){
     mod.attr("FORMAT_PE") = bit7z::BitFormat::Pe;
     mod.attr("FORMAT_PPMD") = bit7z::BitFormat::Ppmd;
     mod.attr("FORMAT_QCOW") = bit7z::BitFormat::QCow;
-    //...
+    mod.attr("FORMAT_RAR") = bit7z::BitFormat::Rar;
+    mod.attr("FORMAT_RAR5") = bit7z::BitFormat::Rar5;
+    mod.attr("FORMAT_RPM") = bit7z::BitFormat::Rpm;
+    mod.attr("FORMAT_7Z") = bit7z::BitFormat::SevenZip;
+    mod.attr("FORMAT_SPLIT") = bit7z::BitFormat::Split;
+    mod.attr("FORMAT_SQUASHFS") = bit7z::BitFormat::SquashFS;
+    mod.attr("FORMAT_SWF") = bit7z::BitFormat::Swf;
+    mod.attr("FORMAT_SWFC") = bit7z::BitFormat::Swfc;
+    mod.attr("FORMAT_TAR") = bit7z::BitFormat::Tar;
+    mod.attr("FORMAT_TE") = bit7z::BitFormat::TE;
+    mod.attr("FORMAT_UDF") = bit7z::BitFormat::Udf;
+    mod.attr("FORMAT_UEFIC") = bit7z::BitFormat::UEFIc;
+    mod.attr("FORMAT_UEFIS") = bit7z::BitFormat::UEFIs;
+    mod.attr("FORMAT_VDI") = bit7z::BitFormat::VDI;
+    mod.attr("FORMAT_VHD") = bit7z::BitFormat::Vhd;
+    mod.attr("FORMAT_VHDX") = bit7z::BitFormat::Vhdx;
+    mod.attr("FORMAT_VMDK") = bit7z::BitFormat::VMDK;
+    mod.attr("FORMAT_WIM") = bit7z::BitFormat::Wim;
+    mod.attr("FORMAT_XAR") = bit7z::BitFormat::Xar;
+    mod.attr("FORMAT_XZ") = bit7z::BitFormat::Xz;
+    mod.attr("FORMAT_Z") = bit7z::BitFormat::Z;
+    mod.attr("FORMAT_ZIP") = bit7z::BitFormat::Zip;   
 }
