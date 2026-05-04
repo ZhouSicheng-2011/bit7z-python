@@ -43,6 +43,9 @@ void init_bitcompressor(py::module& mod){
             const tstring&,
             const tstring&,
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::compressFile))
+        ) const>(&bit7z::BitFileCompressor::compressFile),
+        py::arg("inFile"),
+        py::arg("outFile"),
+        py::arg("inputName") = "")
         ;
 }
