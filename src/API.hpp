@@ -53,6 +53,7 @@ std::map<std::string, std::string> dict_to_string_map(const py::dict& d) {
 //General bit7z headers
 #include <bit7z.hpp>
 #include <bit7zlibrary.hpp>
+using bit7z::tstring;
 
 //My headers
 #include <pyos.hpp>
