@@ -60,4 +60,8 @@ using bit7z::tstring;
 #include <sysinfo.hpp>
 #include <time.hpp>
 
+#ifdef PYTHON_313_PLUS_FREE_THREADING_BUILD
+#define PYTHON_NO_GIL
+#endif
+
 #endif
