@@ -29,7 +29,7 @@ void init_formats(py::module_& mod){
     // 导出格式常量 —— 使用 py::cast 并指定引用策略，避免拷贝不可拷贝对象
     mod.attr("FORMAT_APM") = py::cast(bit7z::BitFormat::APM, py::return_value_policy::reference);
     mod.attr("FORMAT_ARJ") = py::cast(bit7z::BitFormat::Arj, py::return_value_policy::reference);
-    // mod.attr("FORMAT_AUTO") = py::cast(bit7z::BitFormat::Auto, py::return_value_policy::reference); // 已注释
+    mod.attr("FORMAT_AUTO") = py::cast(bit7z::BitFormat::Auto, py::return_value_policy::reference); // 已注释
     mod.attr("FORMAT_BZIP2") = py::cast(bit7z::BitFormat::BZip2, py::return_value_policy::reference);
     mod.attr("FORMAT_CAB") = py::cast(bit7z::BitFormat::Cab, py::return_value_policy::reference);
     mod.attr("FORMAT_CHM") = py::cast(bit7z::BitFormat::Chm, py::return_value_policy::reference);

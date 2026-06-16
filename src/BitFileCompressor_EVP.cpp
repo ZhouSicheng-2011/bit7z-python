@@ -1,15 +1,16 @@
 /*
 This file binds the BitFileCompressor, the file compressor of bit7z.
+(For more details, see website https://github.com/rikyoz/bit7z/wiki/BitFileCompressor)
 Author: ZhouSicheng-2011
 Time: 2026-05-01
 License: This project is under the Apache-2.0 Lincense, see LICENSE for more details.
 */
 
-//bit7z header
-#include <bitfilecompressor.hpp>
-
 //My headers
 #include <API.hpp>
+
+//bit7z headers
+#include <bitfilecompressor.hpp>
 
 void init_BitFileCompressor(py::module_& mod){
     py::class_<bit7z::BitFileCompressor>(mod, "BitFileCompressor")

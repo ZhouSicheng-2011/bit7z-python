@@ -20,6 +20,16 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
   #define WINVER 0X0601
 #endif
 
+//Enable bit7z auto format detection
+#ifndef BIT7Z_AUTO_FORMAT
+#define BIT7Z_AUTO_FORMAT
+#endif
+
+//Enable bit7z regular expression matching
+#ifndef BIT7Z_REGEX_MATCHING
+#define BIT7Z_REGEX_MATCHING
+#endif
+
 //Convert macro to string
 #define STRINGIFY_HELPER(x) #x
 #define STRINGIFY(x) STRINGIFY_HELPER(x)
