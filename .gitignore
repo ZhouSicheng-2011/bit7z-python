@@ -13,3 +13,5 @@ CMakeCache.txt
 
 #Python Virtual Environment
 env*/
+
+*.py

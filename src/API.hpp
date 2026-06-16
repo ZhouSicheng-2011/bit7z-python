@@ -37,7 +37,7 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 #include <pybind11/gil.h>
 namespace py = pybind11;
 //Special Config to disable using native Python list to save time which is spent on converting
-#include <pybind11/pybind11.h>
+#include <pybind11/functional.h>
 PYBIND11_MAKE_OPAQUE(std::map<std::string, std::string>)
 PYBIND11_MAKE_OPAQUE(std::vector<std::string>)
 // Function: use py::list to construct std::vector<std::string>

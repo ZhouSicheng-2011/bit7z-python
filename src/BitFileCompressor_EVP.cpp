@@ -14,26 +14,9 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 //Test macro in this file, just used for VS Code syntax check:
 //#define PYBIT7Z_MAIN
 
-//BitFileCompressor interface
-#ifdef PYBIT7Z_MAIN     //The macro of main binding file of bit7z
-//Create a function to bind "bit7z::BitFileCompressor"
-void init_bitcompressor(py::module& mod){
 
-#else   //Just compile this file
-//Add some needed bindings
-#include <Enums_EVP.cpp>
-#include <Bit7zLibrary_EVP.cpp>
-//Create a test module to check the binding after finish this file
-#ifdef PYTHON_NO_GIL
-PYBIND11_MODULE(bfcps, mod, py::mod_gil_not_used()){
-#else
-PYBIND11_MODULE(bfcps, mod){
-#endif
-    init_lib(mod);
-    init_enums(mod);
-
-#endif
-    py::class_<bit7z::BitFileCompressor>(mod, "BitFileCompressor")
+void init_BitFileCompressor(py::module& mod){
+    py::class_<bit7z::BitFileCompressor, bit7z::BitCompressor<const tstring&>>(mod, "BitFileCompressor")
         //BitFileCompressor( const Bit7zLibrary& lib, const BitInOutFormat& format )
         .def(py::init<const bit7z::Bit7zLibrary&, const bit7z::BitInOutFormat&>())
 
@@ -98,7 +81,7 @@ PYBIND11_MODULE(bfcps, mod){
         .def("compression_format", &bit7z::BitFileCompressor::compressionFormat)
 
         //BitCompressionLevel compressionLevel() const noexcept
-        .def("comprssion_level", &bit7z::BitFileCompressor::compressionLevel)
+        .def("compression_level", &bit7z::BitFileCompressor::compressionLevel)
 
         //BitCompressionMethod compressionMethod() const noexcept
         .def("compression_method", &bit7z::BitFileCompressor::compressionMethod)
@@ -116,7 +99,7 @@ PYBIND11_MODULE(bfcps, mod){
         .def("format", &bit7z::BitFileCompressor::format)
 
         //bool isPasswordDefined() const noexcept
-        .def("is_password_defined", bit7z::BitFileCompressor::isPasswordDefined)
+        .def("is_password_defined", &bit7z::BitFileCompressor::isPasswordDefined)
 
         //const Bit7zLibrary & library() const noexcept
         .def("library", &bit7z::BitFileCompressor::library)
@@ -125,7 +108,7 @@ PYBIND11_MODULE(bfcps, mod){
         .def("overwrite_mode", &bit7z::BitFileCompressor::overwriteMode)
 
         //tstring password() const
-        .def("passowrd", &bit7z::BitFileCompressor::password)
+        .def("password", &bit7z::BitFileCompressor::password)
 
         //PasswordCallback passwordCallback() const
         .def("password_callback", &bit7z::BitFileCompressor::passwordCallback)
@@ -134,7 +117,7 @@ PYBIND11_MODULE(bfcps, mod){
         .def("progress_callback", &bit7z::BitFileCompressor::progressCallback)
 
         //RatioCallback ratioCallback() const
-        .def("ratio_calllback" , &bit7z::BitFileCompressor::ratioCallback)
+        .def("ratio_callback" , &bit7z::BitFileCompressor::ratioCallback)
 
         //bool retainDirectories() const noexcept
         .def("retain_directories", &bit7z::BitFileCompressor::retainDirectories)
@@ -158,16 +141,97 @@ PYBIND11_MODULE(bfcps, mod){
         //...
 
         //void setOverwriteMode( OverwriteMode mode )
-        .def("set_overweite_mode", &bit7z::BitFileCompressor::setOverwriteMode)
+        .def("set_overwrite_mode", &bit7z::BitFileCompressor::setOverwriteMode)
 
         //[virtual] void setPassword( const tstring& password ) override
         .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::setPassword))
-        ;
+        ) >(&bit7z::BitFileCompressor::setPassword))
 
-#ifdef PYBIT7Z_MAIN
-}   //Finish the defination of the binding fuction
-#else
-}   //Finish the defination of the test module
+        //void setPassword( const tstring& password, bool cryptHeaders )
+        .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
+            const tstring&,
+            bool
+        ) >(&bit7z::BitFileCompressor::setPassword))
+
+        //void setPasswordCallback( const PasswordCallback& callback )
+        .def("set_password_callback", &bit7z::BitFileCompressor::setPasswordCallback)
+
+        //void setProgressCallback( const ProgressCallback& callback )
+        .def("set_progress_callback", &bit7z::BitFileCompressor::setProgressCallback)
+
+        //void setRatioCallback( const RatioCallback& callback )
+        .def("set_ratio_callback", &bit7z::BitFileCompressor::setRatioCallback)
+
+        //void setRetainDirectories( bool retain ) noexcept
+        .def("set_retain_directories", &bit7z::BitFileCompressor::setRetainDirectories)
+
+        //void setSolidMode( bool solidMode ) noexcept
+        .def("set_solid_mode", &bit7z::BitFileCompressor::setSolidMode)
+
+        //void setStoreSymbolicLinks( bool storeSymlinks ) noexcept
+        .def("set_store_symbolic_links", &bit7z::BitFileCompressor::setStoreSymbolicLinks)
+
+        //void setThreadsCount( uint32_t threadsCount ) noexcept
+        .def("set_threads_count", &bit7z::BitFileCompressor::setThreadsCount)
+
+        //void setTotalCallback( const TotalCallback& callback )
+        .def("set_total_callback", &bit7z::BitFileCompressor::setTotalCallback)
+
+        //void setUpdateMode( bool canUpdate )
+        //Deprecated since bit7z-4.0, and we won't use this API in new project
+
+        //[virtual] void setUpdateMode( UpdateMode mode )
+        .def("set_update_mode", static_cast<void (bit7z::BitFileCompressor::*)(
+            bit7z::UpdateMode
+        ) >(&bit7z::BitFileCompressor::setUpdateMode))
+
+        //void setVolumeSize( uint64_t volumeSize ) noexcept
+        .def("set_volume_size", &bit7z::BitFileCompressor::setVolumeSize)
+
+        //void setWordSize( uint32_t wordSize )
+        .def("set_word_size", &bit7z::BitFileCompressor::setWordSize)
+
+        //bool solidMode() const noexcept
+        .def("solid_mode", &bit7z::BitFileCompressor::solidMode)
+
+        //bool storeSymbolicLinks() const noexcept
+        .def("store_symbolic_links", &bit7z::BitFileCompressor::storeSymbolicLinks)
+
+        //uint32_t threadsCount() const noexcept
+        .def("threads_count", &bit7z::BitFileCompressor::threadsCount)
+
+        //TotalCallback totalCallback() const
+        .def("total_callback", &bit7z::BitFileCompressor::totalCallback)
+
+        //UpdateMode updateMode() const noexcept
+        .def("update_mode", &bit7z::BitFileCompressor::updateMode)
+
+        //uint64_t volumeSize() const noexcept
+        .def("volume_size", &bit7z::BitFileCompressor::volumeSize)
+
+        //uint32_t wordSize() const noexcept
+        .def("word_size", &bit7z::BitFileCompressor::wordSize)
+        ;
+}
+
+#ifndef PYBIT7Z_MAIN //The macro of the main binding file
+//Add some headers to let it be an independent test module
+#include <Enums_EVP.cpp>
+#include <Bit7zLibrary_EVP.cpp>
+
+#ifdef PYTHON_NO_GIL //Compat Python 3.13+ free-threadind build
+PYBIND11_MODULE(bfcps, mod, py::mod_gil_not_used()){
+    init_lib(mod);
+    init_enums(mod);
+    init_BitFileCompressor(mod);
+}
+#else //Just simple Python build
+PYBIND11_MODULE(bfcps, mod){
+    init_lib(mod);
+    init_enums(mod);
+    init_BitFileCompressor(mod);
+}
+#endif
+
 #endif
