@@ -41,7 +41,8 @@ void init_BitFileCompressor(py::module_& mod){
         .def("compress_directory", &bit7z::BitFileCompressor::compressDirectory)
         
         //void compressDirectoryContents( const tstring& inDir, const tstring& outFile, bool recursive = true, const tstring& filter = "*" ) const
-        .def("compress_directory_contents", &bit7z::BitFileCompressor::compressDirectoryContents)
+        .def("compress_directory_contents", &bit7z::BitFileCompressor::compressDirectoryContents,
+        py::arg("inDir"), py::arg("outFile"), py::arg("recursive") = true, py::arg("filter") = "*")
         
         //void compressFile( const tstring& inFile, const tstring& outFile, const tstring& inputName = {} ) const
         .def("compress_file", static_cast<void (bit7z::BitFileCompressor::*)(
@@ -71,7 +72,8 @@ void init_BitFileCompressor(py::module_& mod){
             const tstring&,
             bool,
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::compressFiles))
+        ) const>(&bit7z::BitFileCompressor::compressFiles),
+        py::arg("inDir"), py::arg("outFile"), py::arg("recursive")=true, py::arg("filter")="*")
 
         //const BitInOutFormat & compressionFormat() const noexcept
         .def("compression_format", &bit7z::BitFileCompressor::compressionFormat, py::return_value_policy::reference_internal)
