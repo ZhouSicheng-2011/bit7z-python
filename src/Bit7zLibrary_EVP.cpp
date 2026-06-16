@@ -9,10 +9,10 @@ Time: 2026-02-23
 License: This project is under the Apache-2.0 Lincense, see LICENSE for more details.
 */
 
-#include <bit7z/bit7zlibrary.hpp>
+#include <bit7zlibrary.hpp>
 #include <API.hpp>
 
-void init_lib(py::module& mod){
+void init_lib(py::module_& mod){
     //Bind the default 7-zip dll of bit7z
     mod.attr("DEFAULT_7ZIP_DLL") = py::cast(bit7z::kDefaultLibrary);
 

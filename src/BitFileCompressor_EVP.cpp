@@ -11,12 +11,8 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 //My headers
 #include <API.hpp>
 
-//Test macro in this file, just used for VS Code syntax check:
-//#define PYBIT7Z_MAIN
-
-
-void init_BitFileCompressor(py::module& mod){
-    py::class_<bit7z::BitFileCompressor, bit7z::BitCompressor<const tstring&>>(mod, "BitFileCompressor")
+void init_BitFileCompressor(py::module_& mod){
+    py::class_<bit7z::BitFileCompressor>(mod, "BitFileCompressor")
         //BitFileCompressor( const Bit7zLibrary& lib, const BitInOutFormat& format )
         .def(py::init<const bit7z::Bit7zLibrary&, const bit7z::BitInOutFormat&>())
 
@@ -78,7 +74,7 @@ void init_BitFileCompressor(py::module& mod){
         ) const>(&bit7z::BitFileCompressor::compressFiles))
 
         //const BitInOutFormat & compressionFormat() const noexcept
-        .def("compression_format", &bit7z::BitFileCompressor::compressionFormat)
+        .def("compression_format", &bit7z::BitFileCompressor::compressionFormat, py::return_value_policy::reference_internal)
 
         //BitCompressionLevel compressionLevel() const noexcept
         .def("compression_level", &bit7z::BitFileCompressor::compressionLevel)
@@ -96,13 +92,13 @@ void init_BitFileCompressor(py::module& mod){
         .def("file_callback", &bit7z::BitFileCompressor::fileCallback)
 
         //[virtual] const BitInFormat &override format() const noexcept
-        .def("format", &bit7z::BitFileCompressor::format)
+        .def("format", &bit7z::BitFileCompressor::format, py::return_value_policy::reference_internal)
 
         //bool isPasswordDefined() const noexcept
         .def("is_password_defined", &bit7z::BitFileCompressor::isPasswordDefined)
 
         //const Bit7zLibrary & library() const noexcept
-        .def("library", &bit7z::BitFileCompressor::library)
+        .def("library", &bit7z::BitFileCompressor::library, py::return_value_policy::reference_internal)
 
         //OverwriteMode overwriteMode() const
         .def("overwrite_mode", &bit7z::BitFileCompressor::overwriteMode)
@@ -219,18 +215,23 @@ void init_BitFileCompressor(py::module& mod){
 //Add some headers to let it be an independent test module
 #include <Enums_EVP.cpp>
 #include <Bit7zLibrary_EVP.cpp>
+#include <BitFormat_EVP.cpp>
 
 #ifdef PYTHON_NO_GIL //Compat Python 3.13+ free-threadind build
 PYBIND11_MODULE(bfcps, mod, py::mod_gil_not_used()){
     init_lib(mod);
     init_enums(mod);
+    init_formats(mod);
     init_BitFileCompressor(mod);
+    mod.attr("VERSION_INFO") = VERSION_STRING;
 }
 #else //Just simple Python build
 PYBIND11_MODULE(bfcps, mod){
     init_lib(mod);
     init_enums(mod);
+    init_formats(mod);
     init_BitFileCompressor(mod);
+    mod.attr("VERSION_INFO") = VERSION_STRING;
 }
 #endif
 

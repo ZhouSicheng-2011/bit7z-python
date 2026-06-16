@@ -7,26 +7,28 @@ Time: 2026-05-03
 License: This project is under the Apache-2.0 Lincense, see LICENSE for more details.
 */
 
+//Enable bit7z auto format detection
+#ifndef BIT7Z_AUTO_FORMAT
+#define BIT7Z_AUTO_FORMAT
+#endif
 
 #include <API.hpp>
-#include <bit7z/bitformat.hpp>
+#include <bitformat.hpp>
 
-void init_formats(py::module mod){
+void init_formats(py::module_& mod){
     py::class_<bit7z::BitInFormat>(mod, "BitInFormat")
-        .def(py::init<unsigned char>(), "Constructs a BitInFormat object with the ID value used by the 7z SDK. Warning: Don't use it unless you know 7-zip SDK well. This constructor is just for binding the formats easier, you only need to use the formats constants provided by bit7z.")
         .def("__eq__", &bit7z::BitInFormat::operator==, "Checks if two BitInFormat objects are equal.")
         .def("__ne__", &bit7z::BitInFormat::operator!=, "Checks if two BitInFormat objects are not equal.")
         .def("value", &bit7z::BitInFormat::value, "Returns the ID value of this BitInFormat object.");
         
     py::class_<bit7z::BitInOutFormat>(mod, "BitOutFormat")
-        .def(py::init<unsigned char>(), "Constructs a BitOutFormat object with the ID value used by the 7z SDK. Warning: Don't use it unless you know 7-zip SDK well. This constructor is just for binding the formats easier, you only need to use the formats constants provided by bit7z.")
         .def("__eq__", &bit7z::BitInOutFormat::operator==, "Checks if two BitOutFormat objects are equal.")
         .def("__ne__", &bit7z::BitInOutFormat::operator!=, "Checks if two BitOutFormat objects are not equal.")
         .def("value", &bit7z::BitInOutFormat::value, "Returns the ID value of this BitOutFormat object.");
 
     mod.attr("FORMAT_APM") = bit7z::BitFormat::APM;
     mod.attr("FORMAT_ARJ") = bit7z::BitFormat::Arj;
-    mod.attr("FORMAT_AUTO") = bit7z::BitFormat::Auto;
+    //mod.attr("FORMAT_AUTO") = bit7z::BitFormat::Auto;
     mod.attr("FORMAT_BZIP2") = bit7z::BitFormat::BZip2;
     mod.attr("FORMAT_CAB") = bit7z::BitFormat::Cab;
     mod.attr("FORMAT_CHM") = bit7z::BitFormat::Chm;

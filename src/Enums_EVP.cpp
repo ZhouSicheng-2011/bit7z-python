@@ -7,7 +7,7 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 #include <API.hpp>
 #include <pybind11/native_enum.h>
 
-void init_enums(py::module& mod){
+void init_enums(py::module_& mod){
     /*
     Init the enums of bit7z
     In order to avoid problem, we exported all the enums in bit7z, even some might never be used.
@@ -22,7 +22,6 @@ void init_enums(py::module& mod){
         .value("Normal", bit7z::BitCompressionLevel::Normal)
         .value("Max", bit7z::BitCompressionLevel::Max)
         .value("Ultra", bit7z::BitCompressionLevel::Ultra)
-        .export_values()
         .finalize();
     
     //Bind BitCompressionMethod
@@ -34,7 +33,6 @@ void init_enums(py::module& mod){
         .value("PPMD", bit7z::BitCompressionMethod::Ppmd)
         .value("Copy", bit7z::BitCompressionMethod::Copy)
         .value("BZip2", bit7z::BitCompressionMethod::BZip2)
-        .export_values()
         .finalize();
     
     //Bind BitError
@@ -60,7 +58,6 @@ void init_enums(py::module& mod){
         .value("UnsupportedVariantType", bit7z::BitError::UnsupportedVariantType)
         .value("WrongUpdateMode", bit7z::BitError::WrongUpdateMode)
         .value("InvalidZipPassword", bit7z::BitError::InvalidZipPassword)
-        .export_values()
         .finalize();
 
     //Bind BitFaliureSource
@@ -78,7 +75,6 @@ void init_enums(py::module& mod){
         .value("UnavailableData", bit7z::BitFailureSource::UnavailableData)
         .value("UnexpectedEnd", bit7z::BitFailureSource::UnexpectedEnd)
         .value("WrongPassword", bit7z::BitFailureSource::WrongPassword)
-        .export_values()
         .finalize();
     
     //Bind BitProperty
@@ -179,11 +175,10 @@ void init_enums(py::module& mod){
         .value("ReadOnly", bit7z::BitProperty::ReadOnly)
         .value("OutName", bit7z::BitProperty::OutName)
         .value("CopyLink", bit7z::BitProperty::CopyLink)
-        .export_values()
         .finalize();
     
     //Bind BitPropVariantType
-    py::native_enum<bit7z::BitPropVariantType>(mod, "BitPropVarintType", "enum.Enum")
+    py::native_enum<bit7z::BitPropVariantType>(mod, "BitPropVariantType", "enum.Enum")
         .value("Empty", bit7z::BitPropVariantType::Empty)
         .value("Bool", bit7z::BitPropVariantType::Bool)
         .value("String", bit7z::BitPropVariantType::String)
@@ -196,7 +191,6 @@ void init_enums(py::module& mod){
         .value("Int32", bit7z::BitPropVariantType::Int32)
         .value("Int64", bit7z::BitPropVariantType::Int64)
         .value("FileTime", bit7z::BitPropVariantType::FileTime)
-        .export_values()
         .finalize();
 
     //Bind BitFormatFeatures
@@ -207,7 +201,6 @@ void init_enums(py::module& mod){
         .value("Encryption", bit7z::FormatFeatures::Encryption)
         .value("HeaderEncryption", bit7z::FormatFeatures::HeaderEncryption)
         .value("MultipleMethods", bit7z::FormatFeatures::MultipleMethods)
-        .export_values()
         .finalize();
 
     //Bind OverwriteMode
@@ -215,7 +208,6 @@ void init_enums(py::module& mod){
         .value("None", bit7z::OverwriteMode::None)
         .value("Overwrite", bit7z::OverwriteMode::Overwrite)
         .value("Skip", bit7z::OverwriteMode::Skip)
-        .export_values()
         .finalize();
 
     //Bind UpdateMode
@@ -223,21 +215,18 @@ void init_enums(py::module& mod){
         .value("None", bit7z::UpdateMode::None)
         .value("Append", bit7z::UpdateMode::Append)
         .value("Update", bit7z::UpdateMode::Update)
-        .export_values()
         .finalize();
 
     //Bind FilterPolicy
     py::native_enum<bit7z::FilterPolicy>(mod, "FilterPolicy", "enum.Enum")
         .value("Include", bit7z::FilterPolicy::Include)
         .value("Exclude", bit7z::FilterPolicy::Exclude)
-        .export_values()
         .finalize();
     
     //Bind ArchiveStartOffset
     py::native_enum<bit7z::ArchiveStartOffset>(mod, "ArchiveStartOffset", "enum.Enum")
         .value("None", bit7z::ArchiveStartOffset::None)
         .value("FileStart", bit7z::ArchiveStartOffset::FileStart)
-        .export_values()
         .finalize();
 
 }
