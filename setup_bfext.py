@@ -25,12 +25,22 @@ if platform.system() == "Windows":
     cpp_flags = ["/O2", "/favor:blend", "/std:c++17", "/utf-8", \
                  f"/DVER_MAJOR={ver_major}", f"/DVER_MINOR={ver_minor}", \
                     f"/DVER_PATCH={ver_patch}"]
+    libs = [
+            "bit7z",
+            "pyos",
+            "OleAut32"                               
+            ]
 elif platform.system() == "Linux":
     bit7z_type = "linux-gcc"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["-O3", "-std=c++17", \
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
                     f"-DVER_PATCH={ver_patch}"]
+    libs = [
+        "bit7z",
+        "pyos",
+        "dl"
+    ]
 
 ext_modules = [
     Pybind11Extension(
@@ -46,11 +56,7 @@ ext_modules = [
             os.path.normpath(os.path.abspath(f"bit7z-{bit7z_type}/lib/x64/Release")),
             os.path.normpath(os.path.abspath("include/dist"))
         ],
-        libraries = [
-            "bit7z",
-            "pyos",
-            "OleAut32"                               
-            ],
+        libraries = libs,
         extra_compile_args = cpp_flags
     ),
 ]
