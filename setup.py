@@ -1,5 +1,4 @@
-# setup_bfcps.py —— 仅构建 BitFileCompressor 模块
-# Available at setup time due to pyproject.toml
+# setup.py
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
@@ -44,8 +43,8 @@ elif platform.system() == "Linux":
 
 ext_modules = [
     Pybind11Extension(
-        "bfext",                                     
-        ["src/BitFileExtractor_EVP.cpp"],           
+        "bit7z_python",                                     
+        ["src/core.cpp"],           
         define_macros = macros,
         include_dirs = [
             os.path.normpath(os.path.abspath(f"bit7z-{bit7z_type}/include/bit7z")),
@@ -62,11 +61,11 @@ ext_modules = [
 ]
 
 setup(
-    name="bfext",                                    
+    name="bit7z_python",                                    
     version=__version__,
     author="ZhouSicheng-2011",
-    url="https://github.com/ZhouSicheng-2011/PyBit7z",
-    description="Python bindings for bit7z library (compressor module)",
+    url="https://github.com/ZhouSicheng-2011/bit7z-python",
+    description="Python bindings for bit7z",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},
     zip_safe=False,

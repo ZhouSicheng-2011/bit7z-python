@@ -214,7 +214,7 @@ void init_BitFileCompressor(py::module_& mod){
         ;
 }
 
-#ifndef PYBIT7Z_MAIN //The macro of the main binding file
+#ifndef BIT7Z_PYTHON_MAIN //The macro of the main binding file
 //Add some headers to let it be an independent test module
 #include <Enums_EVP.cpp>
 #include <Bit7zLibrary_EVP.cpp>
