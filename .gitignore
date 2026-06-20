@@ -13,3 +13,6 @@ CMakeCache.txt
 
 #Python Virtual Environment
 env*/
+
+#Loacl bit7z libs
+bit7z-*/
