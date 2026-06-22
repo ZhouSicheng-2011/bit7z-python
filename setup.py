@@ -5,6 +5,10 @@ from setuptools import setup
 import sys
 import platform
 import os
+import pathlib
+
+HERE = pathlib.Path(__file__).parent
+README = (HERE / "README.md").read_text(encoding="utf-8")
 
 ver_major = 0
 ver_minor = 0
@@ -19,15 +23,15 @@ except:
     pass
 
 if platform.system() == "Windows":
-    bit7z_type = "msvc-2022"
-    bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64/Release"
+    bit7z_type = "windows-msvc"
+    bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["/O2", "/favor:blend", "/std:c++17", "/utf-8", \
                  f"/DVER_MAJOR={ver_major}", f"/DVER_MINOR={ver_minor}", \
                     f"/DVER_PATCH={ver_patch}"]
     libs = [
-            "bit7z",
-            "pyos",
-            "OleAut32"                               
+            "bit7z", # bit7z static library
+            "pyos", # Python style system API library
+            "OleAut32" # dependency of bit7z on Windows                              
             ]
 elif platform.system() == "Linux":
     bit7z_type = "linux-gcc"
@@ -36,9 +40,9 @@ elif platform.system() == "Linux":
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
                     f"-DVER_PATCH={ver_patch}"]
     libs = [
-        "bit7z",
-        "pyos",
-        "dl"
+        "bit7z", # bit7z static library
+        "pyos", # Python style system API library
+        "dl" # dependency of bit7z on Windows
     ]
 
 ext_modules = [
@@ -52,7 +56,7 @@ ext_modules = [
             os.path.normpath(os.path.abspath("include"))
         ],
         library_dirs = [
-            os.path.normpath(os.path.abspath(f"bit7z-{bit7z_type}/lib/x64/Release")),
+            os.path.normpath(os.path.abspath(bit7z_lib_dir)),
             os.path.normpath(os.path.abspath("include/dist"))
         ],
         libraries = libs,
@@ -61,13 +65,19 @@ ext_modules = [
 ]
 
 setup(
-    name="bit7z_python",                                    
+    name="bit7z_python",
     version=__version__,
     author="ZhouSicheng-2011",
+    author_email="ZSCinYBSZ2023@outlook.com",
     url="https://github.com/ZhouSicheng-2011/bit7z-python",
+    license="Apache-2.0",
     description="Python bindings for bit7z",
+    long_description=README,
+    long_description_content_type="text/markdown",
     ext_modules=ext_modules,
+    # Currently, build_ext only provides an optional "highest supported C++
+    # level" feature, but in the future it may provide more features.
     cmdclass={"build_ext": build_ext},
     zip_safe=False,
-    python_requires=">=3.8"
+    python_requires=">=3.9",
 )

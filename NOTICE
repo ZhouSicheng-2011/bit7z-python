@@ -1,0 +1,46 @@
+bit7z-python
+Copyright 2026 ZhouSicheng-2011
+
+This product includes software developed by ZhouSicheng-2011
+and its contributors.
+
+========================================================================
+Third-party notices:
+========================================================================
+
+This product includes bit7z, a C++ static library wrapper for 7-Zip.
+Copyright (c) rikyoz/bit7z contributors
+Licensed under the Mozilla Public License, Version 2.0.
+You may obtain a copy of the MPL 2.0 at https://mozilla.org/MPL/2.0/.
+
+------------------------------------------------------------------------
+
+This product includes 7-Zip (7z.dll) and its associated files.
+7-Zip Copyright (C) 1999-2025 Igor Pavlov.
+
+Licensing information for 7-Zip components:
+
+- The main license for most of the code is the GNU Lesser General Public
+  License (LGPL), either version 2.1 or (at your option) any later version.
+- Some parts of the code, specifically the LZFSE and ZSTD decompression
+  modules, are under the BSD 3-clause License.
+- The XXH64 code is under the BSD 2-clause License.
+- Certain code related to RAR decompression carries the unRAR license
+  restriction (see below).
+
+The complete text of the GNU LGPL can be obtained from:
+  http://www.gnu.org/licenses/lgpl.html
+
+The complete texts of the BSD 3-clause and 2-clause licenses are available
+in the 7-Zip documentation or at:
+  https://opensource.org/licenses/BSD-3-Clause
+  https://opensource.org/licenses/BSD-2-Clause
+
+unRAR license restriction:
+  The decompression engine for RAR archives was developed using source
+  code of unRAR program, which is owned by Alexander Roshal.
+  The unRAR sources cannot be used to re-create the RAR compression
+  algorithm, which is proprietary. Distribution of modified unRAR sources
+  in separate form or as a part of other software is permitted, provided
+  that it is clearly stated in the documentation and source comments that
+  the code may not be used to develop a RAR (WinRAR) compatible archiver.
