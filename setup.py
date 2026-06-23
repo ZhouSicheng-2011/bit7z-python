@@ -42,7 +42,7 @@ elif platform.system() == "Linux":
     libs = [
         "bit7z", # bit7z static library
         "pyos", # Python style system API library
-        "dl" # dependency of bit7z on Windows
+        "dl" # dependency of bit7z on Linux
     ]
 
 ext_modules = [
