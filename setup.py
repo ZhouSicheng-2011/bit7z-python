@@ -29,7 +29,7 @@ if platform.system() == "Windows":
                  f"/DVER_MAJOR={ver_major}", f"/DVER_MINOR={ver_minor}", \
                     f"/DVER_PATCH={ver_patch}"]
     libs = [
-            "bit7z", # bit7z static library
+            "bit7z64", # bit7z static library
             "pyos", # Python style system API library
             "OleAut32" # dependency of bit7z on Windows                              
             ]
@@ -41,7 +41,7 @@ elif platform.system() == "Linux":
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
                     f"-DVER_PATCH={ver_patch}"]
     libs = [
-        "bit7z", # bit7z static library
+        "bit7z64", # bit7z static library
         "pyos", # Python style system API library
         "dl" # dependency of bit7z on Linux
     ]

@@ -18,19 +18,22 @@ jobs:
         run: |
           wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
           tar -xvf bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
+          mv bit7z-4.0.12 bit7z-linux-gcc
+          mkdir -p bit7z_python/7zip
+          cp 7zip/7z.so bit7z_python/7zip/7z.so
         
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.1.0
         env:
-          CIBW_BUILD: "cp38-* cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp313t-* cp314t-* pp39-* pp310-* pp311-*"
+          CIBW_BUILD: "cp312-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_ARCHS: x86_64
-          CIBW_ENVIRONMENT: "LD_LIBRARY_PATH=/project/include/dist"
+          CIBW_ENVIRONMENT: "LD_LIBRARY_PATH=/project/include/dist:$LD_LIBRARY_PATH"
           # Build cross-platform system API library pyos
           CIBW_BEFORE_ALL: >
             cd include && 
             cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release && 
-            cmake --build ./build -j 1 --config Release
+            cmake --build ./build -j 1 --config Release && 
             cd ..
 
       - name: Upload artifacts
@@ -38,3 +41,36 @@ jobs:
         with:
           name: wheels-${{ runner.os }}-${{ runner.arch }}
           path: ./wheelhouse/*.whl
+
+  release:
+    name: Create GitHub Release and upload wheels
+    needs: build_wheels_linux   # 等待构建完成
+    runs-on: ubuntu-latest
+    # 关键权限：创建 Release 需要写权限
+    permissions:
+      contents: write
+    steps:
+      # 下载所有 wheel 文件
+      - name: Download all wheels
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+      
+      # 将子文件夹中的 wheel 文件平铺到 dist/ 根目录
+      - name: Flatten wheel files
+        run: |
+          find dist/ -name "*.whl" -exec mv {} dist/ \;
+          # 显示所有 wheel 文件（调试用）
+          ls -la dist/
+      
+      # 创建 Release 并上传 wheel 文件
+      - name: Create Release and upload assets
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Release $GITHUB_REF_NAME" \
+            --notes "自动构建的 wheel 包，适用于 manylinux_2_28 x86_64 平台。\n\n**注意：** 当前版本仅包含 Linux 平台的构建产物。" \
+            --prerelease \
+            dist/*.whl

@@ -3,7 +3,7 @@ import pathlib
 import platform
 
 def _set_dll_path():
-    dll_dir = pathlib.Path(__file__) / "dll"
+    dll_dir = pathlib.Path(__file__).parent / "7zip"
 
     if platform.system() == "Windows":
         os.add_dll_directory(str(dll_dir))
