@@ -80,6 +80,7 @@ setup(
     cmdclass={"build_ext": build_ext},
     zip_safe=False,
     python_requires=">=3.9",
+    packages=["bit7z_python"],
     package_data={
         "bit7z_python": deps
     }
