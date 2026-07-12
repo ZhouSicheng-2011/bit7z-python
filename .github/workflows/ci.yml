@@ -27,6 +27,7 @@ jobs:
         env:
           CIBW_BUILD: "cp312-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
+          CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: x86_64
           CIBW_ENVIRONMENT: "LD_LIBRARY_PATH=/project/include/dist:$LD_LIBRARY_PATH"
           # Build cross-platform system API library pyos
@@ -42,9 +43,51 @@ jobs:
           name: wheels-${{ runner.os }}-${{ runner.arch }}
           path: ./wheelhouse/*.whl
 
+  build_wheels_windows:
+    name: Build wheels on Windows
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bit7z x64 pre-built package
+        env:
+          BIT7Z_VER: "4.0.12"
+        run: |
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-windows-msvc.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-windows-msvc.tar.gz
+          mv bit7z-4.0.12 bit7z-windows-msvc
+          mkdir -Force bit7z_python/7zip
+          cp 7zip/7z.dll bit7z_python/7zip/7z.dll
+
+      - name: Set up build environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+            arch: x64           
+            vsversion: 2022     
+            toolset: 14.3     
+
+      - name: Build cross-platform system API library pyos
+        run: |
+          cd include
+          cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles"
+          cmake --build ./build -j 1 --config Release 
+          cd ..
+        
+      - name: CI build wheels
+        uses: pypa/cibuildwheel@v4.1.0
+        env:
+          CIBW_BUILD: "cp312-*"
+          CIBW_ARCHS: x86_64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ runner.os }}-${{ runner.arch }}
+          path: ./wheelhouse/*.whl
+
   release:
     name: Create GitHub Release and upload wheels
-    needs: build_wheels_linux   # 等待构建完成
+    needs: [build_wheels_linux, build_wheels_windows]   # 等待构建完成
     runs-on: ubuntu-latest
     # 关键权限：创建 Release 需要写权限
     permissions:
@@ -72,7 +115,7 @@ jobs:
           body: |
             ## This is the first test release!
           draft: false
-          prerelease: ${{ contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
             ./dist/*.whl
         env:

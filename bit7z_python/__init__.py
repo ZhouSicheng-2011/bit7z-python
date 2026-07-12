@@ -26,3 +26,5 @@ def _set_dll_path():
         raise OSError("This is not a supported platform!")
 
 _set_dll_path()
+
+from .bit7z_python import *
