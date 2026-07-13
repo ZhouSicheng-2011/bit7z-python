@@ -50,7 +50,7 @@ elif platform.system() == "Linux":
 
 ext_modules = [
     Pybind11Extension(
-        "bit7z_python",                                     
+        "bit7z_python.bit7z_python",                                     
         ["src/core.cpp"],           
         define_macros = macros,
         include_dirs = [
