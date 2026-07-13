@@ -31,7 +31,8 @@ if platform.system() == "Windows":
     libs = [
             "bit7z64", # bit7z static library
             "pyos", # Python style system API library
-            "OleAut32" # dependency of bit7z on Windows                              
+            "OleAut32", # dependency of bit7z on Windows
+            "user32"                              
             ]
     deps = ["7zip/7z.dll"]
 elif platform.system() == "Linux":
