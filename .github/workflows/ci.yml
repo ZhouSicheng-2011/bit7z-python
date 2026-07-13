@@ -50,14 +50,21 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download bit7z x64 pre-built package
+        shell: pwsh
         env:
           BIT7Z_VER: "4.0.12"
         run: |
-          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-windows-msvc.tar.gz
-          tar -xvf bit7z-${BIT7Z_VER}-windows-msvc.tar.gz
+          curl -L -o bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v$env:BIT7Z_VER/bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
+          tar -xvf bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
           mv bit7z-4.0.12 bit7z-windows-msvc
           mkdir -Force bit7z_python/7zip
           cp 7zip/7z.dll bit7z_python/7zip/7z.dll
+      
+      - name: Set build environmental varibles
+        shell: pwsh
+        run: |
+          $env:newPath = "${{ github.workspace }}\\include\\dist"
+          echo "PATH=$env:newPath;$env:PATH" >> $env:GITHUB_ENV
 
       - name: Set up build environment
         uses: ilammy/msvc-dev-cmd@v1
@@ -77,7 +84,7 @@ jobs:
         uses: pypa/cibuildwheel@v4.1.0
         env:
           CIBW_BUILD: "cp312-*"
-          CIBW_ARCHS: x86_64
+          CIBW_ARCHS: auto64
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
