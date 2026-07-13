@@ -25,7 +25,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.1.0
         env:
-          CIBW_BUILD: "cp312-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp313t-* cp314-* cp314t-* pp311-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: x86_64
@@ -83,7 +83,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.1.0
         env:
-          CIBW_BUILD: "cp312-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp313t-* cp314-* cp314t-* pp311-*"
           CIBW_ARCHS: auto64
 
       - name: Upload artifacts
@@ -120,7 +120,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: bit7z-python-${{ github.ref_name }}
           body: |
-            ## This is the first test release!
+            ## This is the first pre-release which can be used!
           draft: false
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
