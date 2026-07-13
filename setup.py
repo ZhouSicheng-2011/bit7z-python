@@ -34,7 +34,7 @@ if platform.system() == "Windows":
             "OleAut32", # dependency of bit7z on Windows
             "user32"                              
             ]
-    deps = ["7zip/7z.dll"]
+    deps = ["7zip/7z.dll", "pyos.dll"]
 elif platform.system() == "Linux":
     bit7z_type = "linux-gcc"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
