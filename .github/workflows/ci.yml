@@ -120,10 +120,15 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: bit7z-python-${{ github.ref_name }}
           body: |
-            ## This is the first pre-release which can be used!
+            ## This is the first **Release** which can be used! Congratulations!
           draft: false
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
             ./dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN_0 }}
