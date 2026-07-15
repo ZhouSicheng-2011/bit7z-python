@@ -105,6 +105,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: dist/
+
+      - name: Flatten wheel files
+        run: |
+          find dist/ -name "*.whl" -exec mv {} dist/ \;
+          # 显示所有 wheel 文件（调试用）
+          ls -la dist/
+          rm -rf wheels-Linux-X64
+          rm -rf wheels-Windows-X64
+          ls -la dist/
       
       # 创建 Release 并上传 wheel 文件
       - name: Create GitHub Release and upload assets
@@ -117,7 +126,7 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
-            ./dist/**/*.whl
+            ./dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
