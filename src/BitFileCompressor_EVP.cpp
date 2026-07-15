@@ -37,6 +37,12 @@ void init_BitFileCompressor(py::module_& mod){
 
         //void compress( const std::vector< tstring >& inPaths, std::ostream& outStream ) const
         //...
+
+        //void compress( const std::vector< std::pair< tstring, tstring > >& inPaths, const tstring& outFile ) const
+        .def("compress", static_cast<void (bit7z::BitFileCompressor::*)(
+            const std::vector< std::pair< tstring, tstring > >&,
+            const tstring&
+        ) const>(&bit7z::BitFileCompressor::compress))
         
         //void compressDirectory( const tstring& inDir, const tstring& outFile ) const
         .def("compress_directory", &bit7z::BitFileCompressor::compressDirectory)

@@ -229,5 +229,30 @@ void init_enums(py::module_& mod){
         .value("FileStart", bit7z::ArchiveStartOffset::FileStart)
         .finalize();
 
+    //Bind EncryptionScope
+    py::native_enum<bit7z::EncryptionScope>(mod, "EncryptionScope", "enums.Enum")
+        .value("DataOnly", bit7z::EncryptionScope::DataOnly)
+        .value("DataAndHeaders", bit7z::EncryptionScope::DataAndHeaders)
+        .finalize();
+
+    //Bind DeletePolicy
+    py::native_enum<bit7z::DeletePolicy>(mod, "DeletePolicy", "enums.Enum")
+        .value("ItemOnly", bit7z::DeletePolicy::ItemOnly)
+        .value("RecurseDirs", bit7z::DeletePolicy::RecurseDirs)
+        .finalize();
+
+    //Bind SymlinkPolicy 
+    py::native_enum<bit7z::SymlinkPolicy>(mod, "SymlinkPolicy", "enums.Enum")
+        .value("Follow", bit7z::SymlinkPolicy::Follow)
+        .value("DoNotFollow", bit7z::SymlinkPolicy::DoNotFollow)
+        .finalize();
+
+    //Bind FilterResult
+    py::native_enum<bit7z::FilterResult>(mod, "FilterResult", "enums.Enum")
+        .value("ProcessItem", bit7z::FilterResult::ProcessItem)
+        .value("SkipItem", bit7z::FilterResult::SkipItem)
+        .value("AbortOperation", bit7z::FilterResult::AbortOperation)
+        .finalize();
+
 }
 
