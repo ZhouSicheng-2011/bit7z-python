@@ -252,6 +252,16 @@ void init_enums(py::module_& mod){
         .value("ProcessItem", bit7z::FilterResult::ProcessItem)
         .value("SkipItem", bit7z::FilterResult::SkipItem)
         .value("AbortOperation", bit7z::FilterResult::AbortOperation)
+        .value("Process", bit7z::FilterResult::Process)
+        .value("Skip", bit7z::FilterResult::Skip)
+        .value("Abort", bit7z::FilterResult::Abort)
+        .finalize();
+
+    //Bind FolderPathPolicy
+    py::native_enum<bit7z::FolderPathPolicy>(mod, "FolderPathPolicy", "enums.Enum")
+        .value("Strip", bit7z::FolderPathPolicy::Strip)
+        .value("KeepName", bit7z::FolderPathPolicy::KeepName)
+        .value("KeepPath", bit7z::FolderPathPolicy::KeepPath)
         .finalize();
 
 }
