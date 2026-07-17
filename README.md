@@ -1,5 +1,6 @@
 # bit7z-python
 The Support of bit7z in Python
+
 ⚠️Notice: this package needs **Python 3.9 or later**
 
 ## ⚡ Performance
@@ -11,7 +12,8 @@ Compared to pure-Python alternatives like `py7zr`, `bit7z-python` delivers **2.2
 | `py7zr` (pure Python) | ~22.0s | 1x |
 | **`bit7z-python`** | **~10.0s** | **2.2x** |
 
-*Test environment: Intel Core i5-1135G7, 16GB RAM, Windows 10 22H2, Python 3.11.* 
+*Test environment: `Intel Core i5-1135G7 CPU`, `16GB RAM`, `Windows 10 22H2`, `Python 3.11`.* 
+
 *Archive: 137MB 7z file containing EXE, DLL, C/C++ headers, images, etc.*
 
 Test result:
