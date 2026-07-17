@@ -28,9 +28,9 @@ void init_enums(py::module_& mod){
     py::native_enum<bit7z::BitCompressionMethod>(mod, "BitCompressionMethod", "enum.Enum")
         .value("Deflate", bit7z::BitCompressionMethod::Deflate)
         .value("Deflate64", bit7z::BitCompressionMethod::Deflate64)
-        .value("LZMA", bit7z::BitCompressionMethod::Lzma)
-        .value("LZMA2", bit7z::BitCompressionMethod::Lzma2)
-        .value("PPMD", bit7z::BitCompressionMethod::Ppmd)
+        .value("Lzma", bit7z::BitCompressionMethod::Lzma)
+        .value("Lzma2", bit7z::BitCompressionMethod::Lzma2)
+        .value("Ppmd", bit7z::BitCompressionMethod::Ppmd)
         .value("Copy", bit7z::BitCompressionMethod::Copy)
         .value("BZip2", bit7z::BitCompressionMethod::BZip2)
         .finalize();
@@ -58,6 +58,11 @@ void init_enums(py::module_& mod){
         .value("UnsupportedVariantType", bit7z::BitError::UnsupportedVariantType)
         .value("WrongUpdateMode", bit7z::BitError::WrongUpdateMode)
         .value("InvalidZipPassword", bit7z::BitError::InvalidZipPassword)
+        .value("NoMatchingFile", bit7z::BitError::NoMatchingFile)
+        .value("InvalidDirectoryPath", bit7z::BitError::InvalidDirectoryPath)
+        .value("ItemPathOutsideOutputDirectory", bit7z::BitError::ItemPathOutsideOutputDirectory)
+        .value("ItemHasAbsolutePath", bit7z::BitError::ItemHasAbsolutePath)
+        .value("InvalidItemPath", bit7z::BitError::InvalidItemPath)
         .finalize();
 
     //Bind BitFaliureSource
@@ -171,7 +176,7 @@ void init_enums(py::module_& mod){
         .value("NtReparse", bit7z::BitProperty::NtReparse)
         .value("HardLink", bit7z::BitProperty::HardLink)
         .value("INode", bit7z::BitProperty::INode)
-        .value("Streamld", bit7z::BitProperty::StreamId)
+        .value("StreamId", bit7z::BitProperty::StreamId)
         .value("ReadOnly", bit7z::BitProperty::ReadOnly)
         .value("OutName", bit7z::BitProperty::OutName)
         .value("CopyLink", bit7z::BitProperty::CopyLink)
@@ -194,7 +199,7 @@ void init_enums(py::module_& mod){
         .finalize();
 
     //Bind BitFormatFeatures
-    py::native_enum<bit7z::FormatFeatures>(mod, "FormatFeature", "enum.Enum")
+    py::native_enum<bit7z::FormatFeatures>(mod, "FormatFeatures", "enum.Enum")
         .value("MultipleFiles", bit7z::FormatFeatures::MultipleFiles)
         .value("SolidArchive", bit7z::FormatFeatures::SolidArchive)
         .value("CompressionLevel", bit7z::FormatFeatures::CompressionLevel)
@@ -211,10 +216,11 @@ void init_enums(py::module_& mod){
         .finalize();
 
     //Bind UpdateMode
-    py::native_enum<bit7z::UpdateMode>(mod, "UpdateMode", "enum.Enum")
+    py::native_enum<bit7z::UpdateMode>(mod, "UpdateMode", "enum.Enum", "Warning: value Overwrite is deprecated!")
         .value("None", bit7z::UpdateMode::None)
         .value("Append", bit7z::UpdateMode::Append)
         .value("Update", bit7z::UpdateMode::Update)
+        .value("Overwrite", bit7z::UpdateMode::Overwrite)
         .finalize();
 
     //Bind FilterPolicy
