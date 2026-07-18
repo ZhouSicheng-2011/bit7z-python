@@ -14,7 +14,34 @@ Compared to pure-Python alternatives like `py7zr`, `bit7z-python` delivers **2.2
 
 *Test environment: `Intel Core i5-1135G7 CPU`, `16GB RAM`, `Windows 10 22H2`, `Python 3.11`.* 
 
-*Archive: 137MB 7z file containing EXE, DLL, C/C++ headers, images, etc.*
+*Archive (will be uploaded later): 137MB 7z file containing EXE, DLL, C/C++ headers, images, etc.*
+
+Test code: (Needs package `py7zr`)
+```python
+import bit7z_python
+import py7zr
+
+import time as t
+import shutil
+
+
+with py7zr.SevenZipFile(r"D:\GTK4.7z", "r") as fp:
+    t0 = t.time()
+    fp.extractall()
+    t1 = t.time()
+    print(f"py7zr used time: {t1 - t0} s")
+    shutil.rmtree(r".\GTK4")
+
+
+lib = bit7z_python.Bit7zLibrary(r"7z.dll")
+ext = bit7z_python.BitFileExtractor(lib, bit7z_python.FORMAT_AUTO)
+t2 = t.time()
+ext.extract(r"D:\GTK4.7z", r"D:\GTK4")
+t3 = t.time()
+print(f"bit7z-python used time: {t3 - t2} s")
+shutil.rmtree(r"D:\GTK4")
+```
+
 
 Test result:
 ```powershell
@@ -50,10 +77,11 @@ However, the first release [has published](https://github.com/ZhouSicheng-2011/b
 - [ ] `BitArchiveEditor` — edit existing archives (add/remove/update)
 - [ ] `BitArchiveWriter` — create archives
 - [ ] `BitArchiveReader` — read archive metadata
+
+### v1.0.0+
 - [ ] Memory compression/decompression (`BitMemCompressor`/`BitMemExtractor`)
 - [ ] Stream compression/decompression
 - [ ] Nested archive support (v4.1.0 feature)
-- [ ] Progress callbacks
 
 ### Goal
 Provide a **full-featured, convenient, and efficient** compression library for Python.
