@@ -23,36 +23,66 @@ import py7zr
 
 import time as t
 import shutil
+import os
 
 
+print("Extract test starts.")
 with py7zr.SevenZipFile(r"D:\GTK4.7z", "r") as fp:
+    print("py7zr extracting ...")
     t0 = t.time()
     fp.extractall()
     t1 = t.time()
-    print(f"py7zr used time: {t1 - t0} s")
-    shutil.rmtree(r".\GTK4")
+    print(f"py7zr used time (extraction): {t1 - t0} s")
+    
+shutil.rmtree(r".\GTK4")
 
-
+print("bit7z-python extracting ...")
 lib = bit7z_python.Bit7zLibrary(r"7z.dll")
 ext = bit7z_python.BitFileExtractor(lib, bit7z_python.FORMAT_AUTO)
 t2 = t.time()
 ext.extract(r"D:\GTK4.7z", r"D:\GTK4")
 t3 = t.time()
-print(f"bit7z-python used time: {t3 - t2} s")
+print(f"bit7z-python used time (extraction): {t3 - t2} s")
 shutil.rmtree(r"D:\GTK4")
+
+
+print("Compression test starts.")
+with py7zr.SevenZipFile(r"test.7z", "w") as fp:
+    print("py7zr compressing ...")
+    t4 = t.time()
+    fp.writeall(r"D:\我的文档\Pictures\wx")
+    t5 = t.time()
+    print(f"py7zr used time (compression): {t5 - t4} s")
+os.remove("test.7z")
+
+print("bit7z-python compressing ...")
+cps = bit7z_python.BitFileCompressor(lib, bit7z_python.FORMAT_7Z)
+t6 = t.time()
+cps.compress_directory_contents(r"D:\我的文档\Pictures\wx", r".\test.7z", True, "*")
+t7 = t.time()
+print(f"py7zr used time (compression): {t7 - t6} s")
+os.remove("test.7z")
+
 ```
 
 
 Test result:
-```powershell
-PS C:\Users\Administrator> cd D:\QMDownload\Hotfix\Python\Files
-PS D:\QMDownload\Hotfix\Python\Files> .\test.dist\test.exe     # Packaged test program, uses MinGW64 compiler downloaded by Nuitka
-py7zr used time: 22.08535408973694 s
-bit7z-python used time: 9.906861782073975 s
-PS D:\QMDownload\Hotfix\Python\Files> py -3.11 test.py         # Raw test program
-py7zr used time: 21.76419186592102 s
-bit7z-python used time: 10.00881052017212 s
-PS D:\QMDownload\Hotfix\Python\Files>
+```text
+Python 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+
+= RESTART: D:\QMDownload\Hotfix\Python\Files\test.py
+Extract test starts.
+py7zr extracting ...
+py7zr used time (extraction): 20.60436773300171 s
+bit7z-python extracting ...
+bit7z-python used time (extraction): 9.123618602752686 s
+Compression test starts.
+py7zr compressing ...
+py7zr used time (compression): 11.3125159740448 s
+bit7z-python compressing ...
+py7zr used time (compression): 5.000096797943115 s
+
 ```
 
 
@@ -67,6 +97,9 @@ This project is still **developing**.
 However, the first release [has published](https://github.com/ZhouSicheng-2011/bit7z-python/releases/tag/v0.0.1)🚀, and more function will be added in the future releases.
 
 ## 🗺️ Roadmap
+
+## Hotfix release v0.0.2
+Since we have found some little bugs in local tests, we will fix them, link newest bit7z, but we won't provide full support for bit7z v4.1.0
 
 ### v0.1.0 (Next Release)
 - Upgrade bit7z to v4.1.0
