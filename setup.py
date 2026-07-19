@@ -12,7 +12,7 @@ README = (HERE / "README.md").read_text(encoding="utf-8")
 
 ver_major = 0
 ver_minor = 0
-ver_patch = 1
+ver_patch = 2
 __version__ = f"{ver_major}.{ver_minor}.{ver_patch}"
 
 macros = [("VERSION_INFO", __version__)]
