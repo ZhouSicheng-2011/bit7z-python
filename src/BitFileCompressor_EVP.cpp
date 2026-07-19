@@ -18,13 +18,16 @@ void init_BitFileCompressor(py::module_& mod){
         .def(py::init<const bit7z::Bit7zLibrary&, const bit7z::BitInOutFormat&>())
 
         //void clearPassword() noexcept
-        .def("clear_password", &bit7z::BitFileCompressor::clearPassword, "Clear the current password used by the handler. Calling clearPassword() will disable the encryption/decryption of archives.")
+        .def("clear_password", &bit7z::BitFileCompressor::clearPassword,
+            "Clear the current password used by the handler. Calling clear_password() will disable the encryption/decryption of archives."
+        )
         
         //void compress( const std::map< tstring, tstring >& inPaths, const tstring& outFile ) const
         .def("compress", static_cast<void (bit7z::BitFileCompressor::*)(
             const std::map<tstring, tstring>&,
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::compress))
+        ) const>(&bit7z::BitFileCompressor::compress), py::call_guard<py::gil_scoped_release>()
+        )
 
         //void compress( const std::map< tstring, tstring >& inPaths, std::ostream& outStream ) const
         //...
@@ -33,7 +36,8 @@ void init_BitFileCompressor(py::module_& mod){
         .def("compress", static_cast<void (bit7z::BitFileCompressor::*)(
             const std::vector<tstring>&,
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::compress))
+        ) const>(&bit7z::BitFileCompressor::compress), py::call_guard<py::gil_scoped_release>()
+        )
 
         //void compress( const std::vector< tstring >& inPaths, std::ostream& outStream ) const
         //...
@@ -42,14 +46,19 @@ void init_BitFileCompressor(py::module_& mod){
         .def("compress", static_cast<void (bit7z::BitFileCompressor::*)(
             const std::vector< std::pair< tstring, tstring > >&,
             const tstring&
-        ) const>(&bit7z::BitFileCompressor::compress))
+        ) const>(&bit7z::BitFileCompressor::compress), py::call_guard<py::gil_scoped_release>()
+        )
         
         //void compressDirectory( const tstring& inDir, const tstring& outFile ) const
-        .def("compress_directory", &bit7z::BitFileCompressor::compressDirectory)
+        .def("compress_directory", &bit7z::BitFileCompressor::compressDirectory,
+            py::call_guard<py::gil_scoped_release>()
+        )
         
         //void compressDirectoryContents( const tstring& inDir, const tstring& outFile, bool recursive = true, const tstring& filter = "*" ) const
         .def("compress_directory_contents", &bit7z::BitFileCompressor::compressDirectoryContents,
-        py::arg("inDir"), py::arg("outFile"), py::arg("recursive") = true, py::arg("filter") = "*")
+        py::arg("inDir"), py::arg("outFile"), py::arg("recursive") = true, py::arg("filter") = "*",
+        py::call_guard<py::gil_scoped_release>()
+        )
         
         //void compressFile( const tstring& inFile, const tstring& outFile, const tstring& inputName = {} ) const
         .def("compress_file", static_cast<void (bit7z::BitFileCompressor::*)(
@@ -59,7 +68,9 @@ void init_BitFileCompressor(py::module_& mod){
         ) const>(&bit7z::BitFileCompressor::compressFile),
         py::arg("inFile"),
         py::arg("outFile"),
-        py::arg("inputName") = "")
+        py::arg("inputName") = "",
+        py::call_guard<py::gil_scoped_release>()
+        )
 
         //void compressFile( const tstring& inFile, ostream& outStream, const tstring& inputName = {} ) const
         //...
@@ -71,7 +82,9 @@ void init_BitFileCompressor(py::module_& mod){
         .def("compress_files", static_cast<void (bit7z::BitFileCompressor::*)(
             const std::vector< tstring >& inFiles,
             const tstring& outFile 
-        ) const>(&bit7z::BitFileCompressor::compressFiles))
+        ) const>(&bit7z::BitFileCompressor::compressFiles), 
+        py::call_guard<py::gil_scoped_release>()
+        )
 
         //void compressFiles( const tstring& inDir, const tstring& outFile, bool recursive = true, const tstring& filter = "*" ) const
         .def("compress_files", static_cast<void (bit7z::BitFileCompressor::*)(
@@ -80,7 +93,9 @@ void init_BitFileCompressor(py::module_& mod){
             bool,
             const tstring&
         ) const>(&bit7z::BitFileCompressor::compressFiles),
-        py::arg("inDir"), py::arg("outFile"), py::arg("recursive")=true, py::arg("filter")="*")
+        py::arg("inDir"), py::arg("outFile"), py::arg("recursive")=true, py::arg("filter")="*",
+        py::call_guard<py::gil_scoped_release>()
+        )
 
         //const BitInOutFormat & compressionFormat() const noexcept
         .def("compression_format", &bit7z::BitFileCompressor::compressionFormat, py::return_value_policy::reference_internal)

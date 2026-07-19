@@ -14,7 +14,7 @@ jobs:
 
       - name: Download bit7z x64 pre-built package
         env:
-          BIT7Z_VER: "4.0.12"
+          BIT7Z_VER: "4.1.0"
         run: |
           wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
           tar -xvf bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
@@ -52,7 +52,7 @@ jobs:
       - name: Download bit7z x64 pre-built package
         shell: pwsh
         env:
-          BIT7Z_VER: "4.0.12"
+          BIT7Z_VER: "4.1.0"
         run: |
           curl -L -o bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v$env:BIT7Z_VER/bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
           tar -xvf bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
