@@ -18,7 +18,7 @@ jobs:
         run: |
           wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
           tar -xvf bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
-          mv bit7z-4.0.12 bit7z-linux-gcc
+          mv bit7z-${BIT7Z_VER} bit7z-linux-gcc
           mkdir -p bit7z_python/7zip
           cp 7zip/7z.so bit7z_python/7zip/7z.so
         
@@ -56,7 +56,7 @@ jobs:
         run: |
           curl -L -o bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v$env:BIT7Z_VER/bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
           tar -xvf bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
-          mv bit7z-4.0.12 bit7z-windows-msvc
+          mv bit7z-$env:BIT7Z_VER bit7z-windows-msvc
           mkdir -Force bit7z_python/7zip
           cp 7zip/7z.dll bit7z_python/7zip/7z.dll
       
