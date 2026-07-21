@@ -220,7 +220,9 @@ void init_enums(py::module_& mod){
         .value("None", bit7z::UpdateMode::None)
         .value("Append", bit7z::UpdateMode::Append)
         .value("Update", bit7z::UpdateMode::Update)
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
         .value("Overwrite", bit7z::UpdateMode::Overwrite)
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
         .finalize();
 
     //Bind FilterPolicy

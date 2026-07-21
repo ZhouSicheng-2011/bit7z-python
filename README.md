@@ -1,7 +1,7 @@
 # bit7z-python
 The Support of bit7z in Python
 
-[![PyPI version](https://badge.fury.io/py/bit7z-python.svg)](https://pypi.org/project/bit7z-python/)
+[![PyPI version](https://img.shields.io/pypi/v/bit7z-python.svg?label=PyPI&color=blue)](https://pypi.org/project/bit7z-python/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Actions](https://github.com/ZhouSicheng-2011/bit7z-python/actions/workflows/ci.yml/badge.svg)](https://github.com/ZhouSicheng-2011/bit7z-python/actions)
 

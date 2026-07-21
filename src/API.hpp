@@ -87,4 +87,23 @@ using bit7z::tstring;
 #define PYTHON_NO_GIL
 #endif
 
+//Disable deprecated warning macros
+// API.hpp
+#if defined(_MSC_VER)
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN \
+        __pragma(warning(push)) \
+        __pragma(warning(disable: 4996))
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END \
+        __pragma(warning(pop))
+#elif defined(__GNUC__) || defined(__clang__)
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN \
+        _Pragma("GCC diagnostic push") \
+        _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END \
+        _Pragma("GCC diagnostic pop")
+#else
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
+    #define BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
+#endif
+
 #endif

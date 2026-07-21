@@ -169,9 +169,17 @@ void init_BitFileCompressor(py::module_& mod){
         ) >(&bit7z::BitFileCompressor::setPassword))
 
         //void setPassword( const tstring& password, bool cryptHeaders )
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
         .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
             const tstring&,
             bool
+        ) >(&bit7z::BitFileCompressor::setPassword))
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
+
+        //void setPassword( const tstring& password, EncryptionScope scope )
+        .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
+            const tstring&,
+            bit7z::EncryptionScope
         ) >(&bit7z::BitFileCompressor::setPassword))
 
         //void setPasswordCallback( const PasswordCallback& callback )
@@ -189,6 +197,18 @@ void init_BitFileCompressor(py::module_& mod){
         //void setSolidMode( bool solidMode ) noexcept
         .def("set_solid_mode", &bit7z::BitFileCompressor::setSolidMode)
 
+        //void setStoreCreationTime( bool storeCreationTime ) noexcept
+        .def("set_store_creation_time", &bit7z::BitFileCompressor::setStoreCreationTime)
+
+        //void setStoreLastAccessTime( bool storeLastAccessTime ) noexcept
+        .def("set_store_last_access_time", &bit7z::BitFileCompressor::setStoreLastAccessTime)
+
+        //void setStoreLastWriteTime( bool storeLastWriteTime ) noexcept
+        .def("set_store_last_write_time", &bit7z::BitFileCompressor::setStoreLastWriteTime)
+
+        //void setStoreOpenFiles( bool storeOpenFiles ) noexcept
+        .def("set_store_open_files", &bit7z::BitFileCompressor::setStoreOpenFiles)
+
         //void setStoreSymbolicLinks( bool storeSymlinks ) noexcept
         .def("set_store_symbolic_links", &bit7z::BitFileCompressor::setStoreSymbolicLinks)
 
@@ -199,7 +219,11 @@ void init_BitFileCompressor(py::module_& mod){
         .def("set_total_callback", &bit7z::BitFileCompressor::setTotalCallback)
 
         //void setUpdateMode( bool canUpdate )
-        //Deprecated since bit7z-4.0, and we won't use this API in new project
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
+        .def("set_update_mode", static_cast<void (bit7z::BitFileCompressor::*)(
+            bool
+        ) >(&bit7z::BitFileCompressor::setUpdateMode))
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
 
         //[virtual] void setUpdateMode( UpdateMode mode )
         .def("set_update_mode", static_cast<void (bit7z::BitFileCompressor::*)(
