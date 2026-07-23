@@ -20,6 +20,26 @@ void init_BitFileExtractor(py::module_& mod){
         //void clearPassword() noexcept
         .def("clear_password", &bit7z::BitFileExtractor::clearPassword)
 
+        //void extract( const tstring& inArchive, buffer_t& outBuffer, std::uint32_t index = 0 ) const
+        //...
+
+        //void extract( const tstring& inArchive, BufferCallback callback, BitIndicesView indices = {} ) const
+        //...
+
+        //void extract( const tstring& inArchive, byte_t* outBuffer, std::size_t size, std::uint32_t index = 0 ) const
+        //...
+
+        //void extract( const tstring& inArchive, byte_t(&) outBuffer, std::uint32_t index = 0 ) const
+        //...
+
+        //void extract( const tstring& inArchive, const tstring& outDir, RenameCallback callback ) const
+        .def("extract", static_cast<void (bit7z::BitFileExtractor::*)(
+            const tstring&,
+            const tstring&,
+            bit7z::RenameCallback
+        ) const>(&bit7z::BitFileExtractor::extract),
+        py::call_guard<py::gil_scoped_release>())
+
         //void extract( const tstring& inArchive, const tstring& outDir = {} ) const
         .def("extract", static_cast<void (bit7z::BitFileExtractor::*)(
             const tstring&,
@@ -28,22 +48,32 @@ void init_BitFileExtractor(py::module_& mod){
         py::arg("inArchive"), py::arg("outDir")="",
         py::call_guard<py::gil_scoped_release>())
 
-        //void extract( const tstring& inArchive, std::map< tstring, vector< byte_t > >& outMap ) const
+        //void extract( const tstring& inArchive, std::map< tstring, buffer_t >& outMap ) const
         //...
 
-        //void extract( const tstring& inArchive, std::ostream& outStream, uint32_t index = 0 ) const
+        //void extract( const tstring& inArchive, std::ostream& outStream, std::uint32_t index = 0 ) const
         //...
 
-        //void extract( const tstring& inArchive, vector< byte_t >& outBuffer, uint32_t index = 0 ) const
+        //void extract( const tstring& inArchive, buffer_t& outBuffer, std::uint32_t index = 0 ) const
+        //...
+
+        //void extract( const tstring& inArchive, std::array< byte_t, N >& outBuffer, std::uint32_t index = 0 ) const
         //...
 
         //const BitInFormat & extractionFormat() const noexcept
         .def("extraction_format", &bit7z::BitFileExtractor::extractionFormat, py::return_value_policy::reference_internal)
         
-        //void extractItems( const tstring& inArchive, const std::vector< uint32_t >& indices, const tstring& outDir = {} ) const
-        .def("extract_items", &bit7z::BitFileExtractor::extractItems, 
-        py::arg("inArchive"), py::arg("indices"), py::arg("outDir")="",
-        py::call_guard<py::gil_scoped_release>())
+        //void extractItems( const tstring& inArchive, BitIndicesView indices, const tstring& outDir = {} ) const
+        .def("extract_items",
+            [](const bit7z::BitFileExtractor& self,
+                const tstring& inArchive,
+                const std::vector<std::uint32_t>& indices,
+                const tstring& outDir){
+                    self.extractItems(inArchive, indices, outDir);
+                }
+            ,
+            py::arg("in_archive"), py::arg("indices"), py::arg("out_dir")=""
+        )
 
         //void extractMatching( const tstring& inArchive, const tstring& itemFilter, const tstring& outDir = {}, FilterPolicy policy = FilterPolicy::Include ) const
         .def("extract_matching", static_cast<void (bit7z::BitFileExtractor::*)(
@@ -52,11 +82,11 @@ void init_BitFileExtractor(py::module_& mod){
             const tstring&,
             bit7z::FilterPolicy
         ) const>(&bit7z::BitFileExtractor::extractMatching),
-        py::arg("inArchive"), py::arg("itemFilter"), py::arg("outDir")="",
+        py::arg("in_archive"), py::arg("item_filter"), py::arg("out_dir")="",
         py::arg("policy")=bit7z::FilterPolicy::Include, 
         py::call_guard<py::gil_scoped_release>())
 
-        //void extractMatching( const tstring& inArchive, const tstring& itemFilter, vector< byte_t >& outBuffer, FilterPolicy policy = FilterPolicy::Include ) const
+        //void extractMatching( const tstring& inArchive, const tstring& itemFilter, buffer_t& outBuffer, FilterPolicy policy = FilterPolicy::Include ) const
         //...
 
         //void extractMatchingRegex( const tstring& inArchive, const tstring& regex, const tstring& outDir = {}, FilterPolicy policy = FilterPolicy::Include ) const
@@ -66,11 +96,31 @@ void init_BitFileExtractor(py::module_& mod){
             const tstring&,
             bit7z::FilterPolicy
         ) const>(&bit7z::BitFileExtractor::extractMatchingRegex),
-        py::arg("inArchive"), py::arg("regex"), py::arg("outDir")="",
+        py::arg("in_archive"), py::arg("regex"), py::arg("out_dir")="",
         py::arg("policy")=bit7z::FilterPolicy::Include, 
         py::call_guard<py::gil_scoped_release>())
 
-        //void extractMatchingRegex( const tstring& inArchive, const tstring& regex, vector< byte_t >& outBuffer, FilterPolicy policy = FilterPolicy::Include ) const
+        //void extractMatchingRegex( const tstring& inArchive, const tstring& regex, buffer_t& outBuffer, FilterPolicy policy = FilterPolicy::Include ) const
+        //...
+
+        //void extractIf( const tstring& inArchive, buffer_t& outBuffer, FilterCallback callback ) const
+        //...
+
+        ///void extractIf( const tstring& inArchive, const tstring& outDir, FilterCallback callback ) const
+        .def("extract_if", static_cast<void (bit7z::BitFileExtractor::*)(
+            const tstring&,
+            const tstring&,
+            bit7z::FilterCallback
+        ) const>(&bit7z::BitFileExtractor::extractIf),
+        py::arg("in_archive"),
+        py::arg("out_dir"),
+        py::arg("callback"),
+        py::call_guard<py::gil_scoped_release>())
+
+        //void extractRootFolderContent( const tstring& inArchive, const tstring& outDir ) const
+        .def("extract_root_folder_content", &bit7z::BitFileExtractor::extractRootFolderContent, py::call_guard<py::gil_scoped_release>())
+
+        //void extractTo( const tstring& inArchive, RawDataCallback callback, BitIndicesView indices = {} ) const
         //...
 
         //FileCallback fileCallback() const
@@ -127,7 +177,7 @@ void init_BitFileExtractor(py::module_& mod){
         //void setTotalCallback( const TotalCallback& callback )
         .def("set_total_callback", &bit7z::BitFileExtractor::setTotalCallback)
 
-        //void test( const tstring& inArchive ) const
+        //void test( const tstring& inArchive, BitIndicesView indices = {} ) const
         .def("test", &bit7z::BitFileExtractor::test, py::call_guard<py::gil_scoped_release>())
 
         //TotalCallback totalCallback() const

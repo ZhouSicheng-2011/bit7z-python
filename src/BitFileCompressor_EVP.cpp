@@ -242,6 +242,18 @@ void init_BitFileCompressor(py::module_& mod){
         //bool storeSymbolicLinks() const noexcept
         .def("store_symbolic_links", &bit7z::BitFileCompressor::storeSymbolicLinks)
 
+        //bool storeCreationTime() const noexcept
+        .def("store_creation_time", &bit7z::BitFileCompressor::storeCreationTime)
+
+        //bool storeLastAccessTime() const noexcept
+        .def("store_last_access_time", &bit7z::BitFileCompressor::storeLastAccessTime)
+
+        //bool storeLastWriteTime() const noexcept
+        .def("store_last_write_time", &bit7z::BitFileCompressor::storeLastWriteTime)
+
+        //bool storeOpenFiles() const noexcept
+        .def("store_open_files", &bit7z::BitFileCompressor::storeOpenFiles)
+
         //uint32_t threadsCount() const noexcept
         .def("threads_count", &bit7z::BitFileCompressor::threadsCount)
 
