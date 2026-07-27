@@ -7,6 +7,8 @@ build/
 dist/
 CMakeFiles/
 CMakeCache.txt
+*.egg-info/
+*.pyd
 
 #VS Code Configurations
 #.vscode/
@@ -14,5 +16,9 @@ CMakeCache.txt
 #Python Virtual Environment
 env*/
 
-#Loacl bit7z libs
+#Python .pyc cache
+__pycache__/
+
+#Loacl libs
 bit7z-*/
+7zip/

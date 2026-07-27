@@ -2,7 +2,7 @@ import os
 import pathlib
 import platform
 
-__version__ = "0.0.2"
+__version__ = "0.1.0"
 
 def _set_dll_path():
     dll_dir = pathlib.Path(__file__).parent / "7zip"

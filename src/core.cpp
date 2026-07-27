@@ -25,6 +25,7 @@ PYBIND11_MODULE(bit7z_python, mod, py::mod_gil_not_used()){
     init_formats(mod);
     init_BitFileCompressor(mod);
     init_BitFileExtractor(mod);
+    mod.attr("VERSION_INFO") = VERSION_STRING;
 }
 #else
 PYBIND11_MODULE(bit7z_python, mod){
@@ -33,5 +34,6 @@ PYBIND11_MODULE(bit7z_python, mod){
     init_formats(mod);
     init_BitFileCompressor(mod);
     init_BitFileExtractor(mod);
+    mod.attr("VERSION_INFO") = VERSION_STRING;
 }
 #endif

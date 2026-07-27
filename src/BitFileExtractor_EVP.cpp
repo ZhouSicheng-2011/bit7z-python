@@ -38,6 +38,9 @@ void init_BitFileExtractor(py::module_& mod){
             const tstring&,
             bit7z::RenameCallback
         ) const>(&bit7z::BitFileExtractor::extract),
+        py::arg("in_archive"),
+        py::arg("out_dir"),
+        py::arg("callback"),
         py::call_guard<py::gil_scoped_release>())
 
         //void extract( const tstring& inArchive, const tstring& outDir = {} ) const
@@ -45,7 +48,7 @@ void init_BitFileExtractor(py::module_& mod){
             const tstring&,
             const tstring&
         ) const>(&bit7z::BitFileExtractor::extract),
-        py::arg("inArchive"), py::arg("outDir")="",
+        py::arg("in_archive"), py::arg("out_dir")="",
         py::call_guard<py::gil_scoped_release>())
 
         //void extract( const tstring& inArchive, std::map< tstring, buffer_t >& outMap ) const
@@ -72,7 +75,8 @@ void init_BitFileExtractor(py::module_& mod){
                     self.extractItems(inArchive, indices, outDir);
                 }
             ,
-            py::arg("in_archive"), py::arg("indices"), py::arg("out_dir")=""
+            py::arg("in_archive"), py::arg("indices"), py::arg("out_dir")="",
+            py::call_guard<py::gil_scoped_release>()
         )
 
         //void extractMatching( const tstring& inArchive, const tstring& itemFilter, const tstring& outDir = {}, FilterPolicy policy = FilterPolicy::Include ) const
@@ -118,7 +122,11 @@ void init_BitFileExtractor(py::module_& mod){
         py::call_guard<py::gil_scoped_release>())
 
         //void extractRootFolderContent( const tstring& inArchive, const tstring& outDir ) const
-        .def("extract_root_folder_content", &bit7z::BitFileExtractor::extractRootFolderContent, py::call_guard<py::gil_scoped_release>())
+        .def("extract_root_folder_content", &bit7z::BitFileExtractor::extractRootFolderContent,
+            py::arg("in_archive"),
+            py::arg("out_dir"),
+            py::call_guard<py::gil_scoped_release>()
+        )
 
         //void extractTo( const tstring& inArchive, RawDataCallback callback, BitIndicesView indices = {} ) const
         //...
@@ -154,31 +162,56 @@ void init_BitFileExtractor(py::module_& mod){
         .def("retain_directories", &bit7z::BitFileExtractor::retainDirectories)
 
         //void setFileCallback( const FileCallback& callback )
-        .def("set_file_callback", &bit7z::BitFileExtractor::setFileCallback)
+        .def("set_file_callback", &bit7z::BitFileExtractor::setFileCallback,
+            py::arg("callback")
+        )
 
         //void setOverwriteMode( OverwriteMode mode )
-        .def("set_overwrite_mode", &bit7z::BitFileExtractor::setOverwriteMode)
+        .def("set_overwrite_mode", &bit7z::BitFileExtractor::setOverwriteMode, 
+            py::arg("mode")
+        )
 
         //[virtual] void setPassword( const tstring& password )
-        .def("set_password", &bit7z::BitFileExtractor::setPassword)
+        .def("set_password", &bit7z::BitFileExtractor::setPassword, 
+            py::arg("password")
+        )
 
         //void setPasswordCallback( const PasswordCallback& callback )
-        .def("set_password_callback", &bit7z::BitFileExtractor::setPasswordCallback)
+        .def("set_password_callback", &bit7z::BitFileExtractor::setPasswordCallback,
+            py::arg("callback")
+        )
 
         //void setProgressCallback( const ProgressCallback& callback )
-        .def("set_progress_callback", &bit7z::BitFileExtractor::setProgressCallback)
+        .def("set_progress_callback", &bit7z::BitFileExtractor::setProgressCallback,
+            py::arg("callback")
+        )
 
         //void setRatioCallback( const RatioCallback& callback )
-        .def("set_ratio_callback", &bit7z::BitFileExtractor::setRatioCallback)
+        .def("set_ratio_callback", &bit7z::BitFileExtractor::setRatioCallback,
+            py::arg("callback")
+        )
 
         //void setRetainDirectories( bool retain ) noexcept
-        .def("set_retain_directories", &bit7z::BitFileExtractor::setRetainDirectories)
+        .def("set_retain_directories", &bit7z::BitFileExtractor::setRetainDirectories,
+            py::arg("retain")
+        )
 
         //void setTotalCallback( const TotalCallback& callback )
-        .def("set_total_callback", &bit7z::BitFileExtractor::setTotalCallback)
+        .def("set_total_callback", &bit7z::BitFileExtractor::setTotalCallback,
+            py::arg("callback")
+        )
 
         //void test( const tstring& inArchive, BitIndicesView indices = {} ) const
-        .def("test", &bit7z::BitFileExtractor::test, py::call_guard<py::gil_scoped_release>())
+        .def("test", [](
+            const bit7z::BitFileExtractor& self,
+            const tstring& inArchive,
+            const std::vector<std::uint32_t>& indices){
+                self.test(inArchive, indices);
+            },
+        py::arg("in_archive"),
+        py::arg("indices")=std::vector<std::uint32_t>{},
+        py::call_guard<py::gil_scoped_release>()
+        )
 
         //TotalCallback totalCallback() const
         .def("total_callback", &bit7z::BitFileExtractor::totalCallback)

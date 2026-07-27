@@ -18,7 +18,13 @@ void init_lib(py::module_& mod){
 
     //Bind the Bit7zLibrary class
     py::class_<bit7z::Bit7zLibrary>(mod, "Bit7zLibrary")
-        .def(py::init<const std::string&>(), "Constructs a Bit7zLibrary object by loading the specified 7zip shared library. By default, it searches a 7z.dll in the same path of the application. Args: libraryPath(str): the path to the shared library file to be loaded.")
-        .def("set_large_page_mode", &bit7z::Bit7zLibrary::setLargePageMode, "Set the 7-zip shared library to use large memory pages.");
+        .def(py::init<const std::string&>(),
+            py::arg("library_path")=bit7z::kDefaultLibrary,
+            "Constructs a Bit7zLibrary object by loading the specified 7zip shared library. By default, it searches a 7z.dll in the same path of the application. Args: libraryPath(str): the path to the shared library file to be loaded."
+        )
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
+        .def("set_large_page_mode", &bit7z::Bit7zLibrary::setLargePageMode, "[Deprecated] Set the 7-zip shared library to use large memory pages.")
+        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
+        .def("use_large_pages", &bit7z::Bit7zLibrary::useLargePages, "Set the 7-zip shared library to use large memory pages.");
 }
 
