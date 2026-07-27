@@ -194,7 +194,6 @@ void init_BitFileCompressor(py::module_& mod){
         )
 
         //void setPassword( const tstring& password, bool cryptHeaders )
-        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
         .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
             const tstring&,
             bool
@@ -202,7 +201,6 @@ void init_BitFileCompressor(py::module_& mod){
         py::arg("password"),
         py::arg("crypt_headers")
         )
-        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
 
         //void setPassword( const tstring& password, EncryptionScope scope )
         .def("set_password", static_cast<void (bit7z::BitFileCompressor::*)(
@@ -274,13 +272,11 @@ void init_BitFileCompressor(py::module_& mod){
         )
 
         //void setUpdateMode( bool canUpdate )
-        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_BEGIN
         .def("set_update_mode", static_cast<void (bit7z::BitFileCompressor::*)(
             bool
         ) >(&bit7z::BitFileCompressor::setUpdateMode),
         py::arg("can_update")
         )
-        BIT7Z_PYTHON_SUPPRESS_DEPRECATED_END
 
         //[virtual] void setUpdateMode( UpdateMode mode )
         .def("set_update_mode", static_cast<void (bit7z::BitFileCompressor::*)(
