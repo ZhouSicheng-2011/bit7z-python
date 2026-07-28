@@ -335,12 +335,14 @@ void init_BitFileCompressor(py::module_& mod){
 #include <Enums_EVP.cpp>
 #include <Bit7zLibrary_EVP.cpp>
 #include <BitFormat_EVP.cpp>
+#include <BitArchiveItem_EVP.cpp>
 
 #ifdef PYTHON_NO_GIL //Compat Python 3.13+ free-threadind build
 PYBIND11_MODULE(bfcps, mod, py::mod_gil_not_used()){
     init_lib(mod);
     init_enums(mod);
     init_formats(mod);
+    init_BitArchiveItem(mod);
     init_BitFileCompressor(mod);
     mod.attr("VERSION_INFO") = VERSION_STRING;
 }
@@ -349,6 +351,7 @@ PYBIND11_MODULE(bfcps, mod){
     init_lib(mod);
     init_enums(mod);
     init_formats(mod);
+    init_BitArchiveItem(mod);
     init_BitFileCompressor(mod);
     mod.attr("VERSION_INFO") = VERSION_STRING;
 }

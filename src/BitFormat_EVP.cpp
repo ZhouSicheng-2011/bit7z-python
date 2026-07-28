@@ -21,10 +21,13 @@ void init_formats(py::module_& mod){
         .def("__ne__", &bit7z::BitInFormat::operator!=, "Checks if two BitInFormat objects are not equal.")
         .def("value", &bit7z::BitInFormat::value, "Returns the ID value of this BitInFormat object.");
         
-    py::class_<bit7z::BitInOutFormat>(mod, "BitOutFormat")
+    py::class_<bit7z::BitInOutFormat>(mod, "BitInOutFormat")
         .def("__eq__", &bit7z::BitInOutFormat::operator==, "Checks if two BitOutFormat objects are equal.")
         .def("__ne__", &bit7z::BitInOutFormat::operator!=, "Checks if two BitOutFormat objects are not equal.")
-        .def("value", &bit7z::BitInOutFormat::value, "Returns the ID value of this BitOutFormat object.");
+        .def("value", &bit7z::BitInOutFormat::value, "Returns the ID value of this BitOutFormat object.")
+        .def("default_method", &bit7z::BitInOutFormat::defaultMethod, "Returns the default method used for compressing the archive format.")
+        .def("features", &bit7z::BitInOutFormat::features, "Returns the bitset of the features supported by the format.")
+        .def("has_feature", &bit7z::BitInOutFormat::hasFeature, py::arg("feature"), "Returns a boolean value indicating whether the format has the given feature.");
 
     // 导出格式常量 —— 使用 py::cast 并指定引用策略，避免拷贝不可拷贝对象
     mod.attr("FORMAT_APM") = py::cast(bit7z::BitFormat::APM, py::return_value_policy::reference);

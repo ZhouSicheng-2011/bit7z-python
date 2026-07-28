@@ -16,6 +16,7 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 #include <BitFormat_EVP.cpp>
 #include <BitFileExtractor_EVP.cpp>
 #include <BitFileCompressor_EVP.cpp>
+#include <BitArchiveItem_EVP.cpp>
 
 //Main module
 #ifdef PYTHON_NO_GIL
@@ -23,6 +24,7 @@ PYBIND11_MODULE(bit7z_python, mod, py::mod_gil_not_used()){
     init_enums(mod);
     init_lib(mod);
     init_formats(mod);
+    init_BitArchiveItem(mod);
     init_BitFileCompressor(mod);
     init_BitFileExtractor(mod);
     mod.attr("VERSION_INFO") = VERSION_STRING;
@@ -32,6 +34,7 @@ PYBIND11_MODULE(bit7z_python, mod){
     init_enums(mod);
     init_lib(mod);
     init_formats(mod);
+    init_BitArchiveItem(mod);
     init_BitFileCompressor(mod);
     init_BitFileExtractor(mod);
     mod.attr("VERSION_INFO") = VERSION_STRING;

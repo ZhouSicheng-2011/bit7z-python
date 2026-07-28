@@ -16,7 +16,7 @@ void init_enums(py::module_& mod){
 
     //Bind BitCompressionLevel
     py::native_enum<bit7z::BitCompressionLevel>(mod, "BitCompressionLevel", "enum.Enum")
-        .value("None", bit7z::BitCompressionLevel::None)
+        .value("NoneCompression", bit7z::BitCompressionLevel::None)
         .value("Fastest", bit7z::BitCompressionLevel::Fastest)
         .value("Fast", bit7z::BitCompressionLevel::Fast)
         .value("Normal", bit7z::BitCompressionLevel::Normal)
@@ -210,14 +210,14 @@ void init_enums(py::module_& mod){
 
     //Bind OverwriteMode
     py::native_enum<bit7z::OverwriteMode>(mod, "OverwriteMode", "enum.Enum")
-        .value("None", bit7z::OverwriteMode::None)
+        .value("NoneOverwrite", bit7z::OverwriteMode::None)
         .value("Overwrite", bit7z::OverwriteMode::Overwrite)
         .value("Skip", bit7z::OverwriteMode::Skip)
         .finalize();
 
     //Bind UpdateMode
     py::native_enum<bit7z::UpdateMode>(mod, "UpdateMode", "enum.Enum", "Warning: value Overwrite is deprecated!")
-        .value("None", bit7z::UpdateMode::None)
+        .value("NoneUpdate", bit7z::UpdateMode::None)
         .value("Append", bit7z::UpdateMode::Append)
         .value("Update", bit7z::UpdateMode::Update)
         .value("Overwrite", bit7z::UpdateMode::Overwrite)
@@ -231,7 +231,7 @@ void init_enums(py::module_& mod){
     
     //Bind ArchiveStartOffset
     py::native_enum<bit7z::ArchiveStartOffset>(mod, "ArchiveStartOffset", "enum.Enum")
-        .value("None", bit7z::ArchiveStartOffset::None)
+        .value("NoneOffset", bit7z::ArchiveStartOffset::None)
         .value("FileStart", bit7z::ArchiveStartOffset::FileStart)
         .finalize();
 

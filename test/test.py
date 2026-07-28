@@ -23,6 +23,7 @@ t2 = t.time()
 ext.extract(r"./GTK4.7z", r"./GTK4")
 t3 = t.time()
 print(f"bit7z-python used time (extraction): {t3 - t2} s")
+del ext
 shutil.rmtree(r"./GTK4")
 
 
@@ -41,4 +42,5 @@ t6 = t.time()
 cps.compress_directory_contents(r"./wx_demos", r"./test.7z", True, "*")
 t7 = t.time()
 print(f"bit7z-python used time (compression): {t7 - t6} s")
+del cps
 os.remove("test.7z")
