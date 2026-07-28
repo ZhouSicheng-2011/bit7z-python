@@ -121,7 +121,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           name: bit7z-python-${{ github.ref_name }}
-          body_path: CHANGELOG.md
+          body_path: ${{ github.workspace }}/CHANGELOG.md
           draft: false
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
