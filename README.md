@@ -34,19 +34,20 @@ extractor = b7z.BitFileExtractor(lib, b7z.FORMAT_AUTO)
 extractor.extract("./archive.7z", "./output/")
 ```
 
-## ⚡ Performance
 
 ## ⚡ Performance
 
 Compared to pure‑Python alternatives like `py7zr`, `bit7z‑python` delivers **~2.2× faster extraction** and **~2.85× faster compression** — thanks to the underlying C++ 7‑zip library.
 
-| Operation | `py7zr` (pure Python) | **`bit7z‑python`** | Speedup |
+| Operation | `py7zr` (pure Python) | **`bit7z‑python` (Newest)** | Speedup |
 | :-------- | --------------------: | -----------------: | ------: |
-| **Extract** (137 MB) | 44.88 s | **20.18 s** | **2.22×** |
-| **Compress** (37 MB) | 16.63 s | **5.83 s** | **2.85×** |
+| **Extract** (137 MB) | 44.88 s | **20.18 s** | **2.22x** |
+| **Compress** (37 MB) | 16.63 s | **5.83 s** |  **2.85x** |
 
 *Test environment:*  
 `Intel Core i5‑6500`, `16 GB RAM`, `Windows 10 22H2`, `Python 3.14.3 free‑threading`
+
+_Notice: Speedup figures are from our test environment; on other hardware (e.g., Core i5‑1135G7) the speedup was about 2.3x. The key takeaway is that bit7z‑python consistently outperforms py7zr by 2.2~2.3x or more across platforms._
 
 Test archives are located in the `test/` directory of this repository:  
 - `test/GTK4.7z` — 137 MB archive for extraction tests  
@@ -91,7 +92,7 @@ The Python API follows the same structure with **PEP8** naming conventions:
 | `extractArchive()` | `extract_archive()` |
 | `BitFileCompressor` | `BitFileCompressor` (same) |
 
-Full API documentation is planned for future releases.
+Full API documentation is planned for the next release.
 
 ## License
 This project is under the Apache-2.0 License, see [here](./LICENSE) for more details

@@ -1,5 +1,5 @@
 /*
-This file binds the BitFileCompressor, the file compressor of bit7z.
+This file binds the BitArchiveItem.
 (For more details, see website https://github.com/rikyoz/bit7z/wiki/BitArchiveItem)
 Author: ZhouSicheng-2011
 Time: 2026-07-28
