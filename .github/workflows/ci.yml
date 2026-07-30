@@ -117,7 +117,8 @@ jobs:
       
       - name: Download CHANGELOG.md
         run: |
-          wget wget https://raw.githubusercontent.com/ZhouSicheng-2011/bit7z-python/${{ github.ref_name }}/CHANGELOG.md
+          wget https://raw.githubusercontent.com/ZhouSicheng-2011/bit7z-python/${{ github.ref_name }}/CHANGELOG.md
+          ls -la
       
       # 创建 Release 并上传 wheel 文件
       - name: Create GitHub Release and upload assets
@@ -134,7 +135,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete CHAGELOG.md
-        run: rm CHANGELOG.md
+        run: |
+          rm CHANGELOG.md
+          ls -la
 
       - name: Publish to PyPI
         if: ${{ !contains(github.ref_name, 'alpha') && !contains(github.ref_name, 'beta') && !contains(github.ref_name, 'rc') }}
