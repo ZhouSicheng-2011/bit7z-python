@@ -63,7 +63,7 @@ However, the first release [has published](https://github.com/ZhouSicheng-2011/b
 ## 🗺️ Roadmap
 
 
-### v0.1.0 (Next Release)
+### v0.1.1 (This Release)
 - Upgrade bit7z to v4.1.0
 - API compatibility updates (no breaking changes)
 - Performance improvements from bit7z v4.1.0

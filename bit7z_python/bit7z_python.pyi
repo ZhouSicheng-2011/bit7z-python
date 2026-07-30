@@ -554,4 +554,4 @@ FORMAT_XAR: BitInFormat  # value = <bit7z_python.bit7z_python.BitInFormat object
 FORMAT_XZ: BitInOutFormat  # value = <bit7z_python.bit7z_python.BitInOutFormat object>
 FORMAT_Z: BitInFormat  # value = <bit7z_python.bit7z_python.BitInFormat object>
 FORMAT_ZIP: BitInOutFormat  # value = <bit7z_python.bit7z_python.BitInOutFormat object>
-VERSION_INFO: str = '0.1.0'
+VERSION_INFO: str = '0.1.1'
