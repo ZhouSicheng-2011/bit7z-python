@@ -35,6 +35,13 @@ extractor.extract("./archive.7z", "./output/")
 ```
 
 
+## 📖 Documentation
+
+Full API documentation is available [here](https://github.com/ZhouSicheng-2011/bit7z-python/wiki).
+
+If you find anything wrong in this documentation, please on an issue.
+
+
 ## ⚡ Performance
 
 Compared to pure‑Python alternatives like `py7zr`, `bit7z‑python` delivers **~2.2× faster extraction** and **~2.85× faster compression** — thanks to the underlying C++ 7‑zip library.
@@ -81,18 +88,6 @@ However, the first release [has published](https://github.com/ZhouSicheng-2011/b
 ### Goal
 Provide a **full-featured, convenient, and efficient** compression library for Python.
 
-## 📖 Documentation
-
-For now, please refer to the [bit7z Wiki](https://github.com/rikyoz/bit7z/wiki) for API details.  
-The Python API follows the same structure with **PEP8** naming conventions:
-
-| bit7z (C++) | bit7z-python (Python) |
-| :--- | :--- |
-| `compressFiles()` | `compress_files()` |
-| `extractArchive()` | `extract_archive()` |
-| `BitFileCompressor` | `BitFileCompressor` (same) |
-
-Full API documentation is planned for the next release.
 
 ## License
 This project is under the Apache-2.0 License, see [here](./LICENSE) for more details
