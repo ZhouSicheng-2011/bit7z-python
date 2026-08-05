@@ -31,7 +31,7 @@ jobs:
           # Build cross-platform system API library pyos
           CIBW_BEFORE_ALL: >
             cd include && 
-            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release && 
+            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_CXX_STANDARD=17 && 
             cmake --build ./build -j 1 --config Release && 
             cd ..
 
