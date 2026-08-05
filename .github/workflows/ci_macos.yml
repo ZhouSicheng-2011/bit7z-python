@@ -1,0 +1,95 @@
+name: Build bit7z-python on macOS (experimental)
+
+on:
+  push:
+    tags:
+      - "v*-macos" 
+
+jobs:
+  build_wheels_macos:
+    name: Build wheels on macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bit7z macOS pre-built package
+        env:
+          BIT7Z_VER: "4.1.0"
+        run: |
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}-macos/bit7z-${BIT7Z_VER}-macos.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-macos.tar.gz
+          mv bit7z-${BIT7Z_VER} bit7z-macos
+          mkdir -p bit7z_python/7zip
+          cp 7zip/7z.dylib bit7z_python/7zip/7z.dylib
+        
+      - name: CI build wheels
+        uses: pypa/cibuildwheel@v4.1.0
+        env:
+          CIBW_BUILD: "cp311-*"
+          CIBW_ARCHS: arm64
+          CIBW_ENVIRONMENT: "DYLD_LIBRARY_PATH=${{ github.workspace }}/include/dist:$DYLD_LIBRARY_PATH"
+          # Build cross-platform system API library pyos
+          CIBW_BEFORE_ALL: >
+            cd include && 
+            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release && 
+            cmake --build ./build -j 1 --config Release && 
+            cd ..
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ runner.os }}-${{ runner.arch }}
+          path: ./wheelhouse/*.whl
+
+  release:
+    name: Create GitHub Release and upload wheels
+    needs: [build_wheels_macos]   # 等待构建完成
+    runs-on: ubuntu-latest
+    # 关键权限：创建 Release 需要写权限
+    permissions:
+      contents: write
+    steps:
+      # 下载所有 wheel 文件
+      - name: Download all wheels
+        uses: actions/download-artifact@v4
+        with:
+          path: dist/
+
+      - name: Flatten wheel files
+        run: |
+          find dist/ -name "*.whl" -exec mv {} dist/ \;
+          # 显示所有 wheel 文件（调试用）
+          ls -la dist/
+          # rm -rf dist/wheels-Linux-X64
+          # rm -rf dist/wheels-Windows-X64
+          ls -la dist/
+      
+      - name: Download CHANGELOG_MACOS.md
+        run: |
+          wget https://raw.githubusercontent.com/ZhouSicheng-2011/bit7z-python/${{ github.ref_name }}/CHANGELOG_MACOS.md
+          ls -la
+      
+      # 创建 Release 并上传 wheel 文件
+      - name: Create GitHub Release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: bit7z-python-${{ github.ref_name }}
+          body_path: CHANGELOG_MACOS.md
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          files: |
+            ./dist/*.whl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete CHAGELOG.md
+        run: |
+          rm CHANGELOG_MACOS.md
+          ls -la
+
+      - name: Publish to PyPI
+        if: ${{ !contains(github.ref_name, 'alpha') && !contains(github.ref_name, 'beta') && !contains(github.ref_name, 'rc') }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN_0 }}

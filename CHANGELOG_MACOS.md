@@ -1,0 +1,1 @@
+This is a macOS experimental build, just for verify whether bit7z-python can be used on macOS

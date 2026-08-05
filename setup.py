@@ -22,7 +22,7 @@ try:
 except:
     pass
 
-if platform.system() == "Windows":
+if platform.system() == "Windows" and platform.machine() == "AMD64":
     bit7z_type = "windows-msvc"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["/O2", "/favor:blend", "/std:c++17", "/utf-8", \
@@ -35,7 +35,8 @@ if platform.system() == "Windows":
             "user32"                              
             ]
     deps = ["7zip/7z.dll", "pyos.dll"]
-elif platform.system() == "Linux":
+
+elif platform.system() == "Linux" and platform.machine() == "x86_64":
     bit7z_type = "linux-gcc"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["-O3", "-std=c++17", \
@@ -47,6 +48,42 @@ elif platform.system() == "Linux":
         "dl" # dependency of bit7z on Linux
     ]
     deps = ["7zip/7z.so"]
+elif platform.system() == "Linux" and platform.machine() == "aarch64":
+    bit7z_type = "linux-gcc"
+    bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/arm64"
+    cpp_flags = ["-O3", "-std=c++17", \
+                 f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
+                    f"-DVER_PATCH={ver_patch}"]
+    libs = [
+        "bit7z64", # bit7z static library
+        "pyos", # Python style system API library
+        "dl" # dependency of bit7z on Linux
+    ]
+    deps = ["7zip/7z.so"]
+
+elif platform.system() == "Darwin" and platform.machine() == "arm64":
+    bit7z_type = "macos"
+    bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/arm64"
+    cpp_flags = ["-O3", "-std=c++17", \
+                 f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
+                    f"-DVER_PATCH={ver_patch}"]
+    libs = [
+        "bit7z64", # bit7z static library
+        "pyos", # Python style system API library
+    ]
+    deps = ["7zip/7z.dylib"]
+elif platform.system() == "Darwin" and platform.machine() == "x86_64":
+    bit7z_type = "macos"
+    bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
+    cpp_flags = ["-O3", "-std=c++17", \
+                 f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
+                    f"-DVER_PATCH={ver_patch}"]
+    libs = [
+        "bit7z64", # bit7z static library
+        "pyos", # Python style system API library
+    ]
+    deps = ["7zip/7z.dylib"]
+
 
 ext_modules = [
     Pybind11Extension(
@@ -71,7 +108,7 @@ setup(
     name="bit7z_python",
     version=__version__,
     author="ZhouSicheng-2011",
-    author_email="ZSCinYBSZ2023@outlook.com",
+    author_email="3147980579@qq.com (Another available email: ZSCinYBSZ2023@outlook.com)",
     url="https://github.com/ZhouSicheng-2011/bit7z-python",
     license="Apache-2.0",
     description="Python bindings for bit7z",
