@@ -44,15 +44,22 @@ If you find anything wrong in this documentation, please on an issue.
 
 ## ⚡ Performance
 
-Compared to pure‑Python alternatives like `py7zr`, `bit7z‑python` delivers **~2.2× faster extraction** and **~2.85× faster compression** — thanks to the underlying C++ 7‑zip library.
 
-| Operation | `py7zr` (pure Python) | **`bit7z‑python` (Newest)** | Speedup |
+Compared to pure‑Python alternatives like `py7zr`, `bit7z‑python` delivers **~2.4× faster extraction** and **~2.4× faster compression** — thanks to the underlying C++ 7‑zip library.
+
+| Operation | `py7zr` (pure Python) | **`bit7z‑python`** | Speedup |
 | :-------- | --------------------: | -----------------: | ------: |
-| **Extract** (137 MB) | 44.88 s | **20.18 s** | **2.22x** |
-| **Compress** (37 MB) | 16.63 s | **5.83 s** |  **2.85x** |
+| **Extract** (GTK4 SDK) | 35.12 s | **14.45 s** | **2.43×** |
+| **Compress** (wx_demos folder) | 14.37 s | **5.97 s** |  **2.41×** |
 
 *Test environment:*  
-`Intel Core i5‑6500`, `16 GB RAM`, `Windows 10 22H2`, `Python 3.14.3 free‑threading`
+`Intel Core i5‑6500`, `16 GB RAM`, `Windows 10 22H2`, `Python 3.14.3`
+
+### Visualized result
+![py7zr extraction](./screenshots/pe.jpg)
+![bit7z-python extraction](./screenshots/be.jpg)
+![py7zr compression](./screenshots/pc.jpg)
+![bit7z-python compression](./screenshots/bc.jpg)
 
 _Notice: Speedup figures are from our test environment; on other hardware (e.g., Core i5‑1135G7) the speedup was about 2.3x. The key takeaway is that bit7z‑python consistently outperforms py7zr by 2.2~2.3x or more across platforms._
 

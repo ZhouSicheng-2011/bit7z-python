@@ -108,7 +108,7 @@ setup(
     name="bit7z_python",
     version=__version__,
     author="ZhouSicheng-2011",
-    author_email="3147980579@qq.com (Another available email: ZSCinYBSZ2023@outlook.com)",
+    author_email="csdc3946gh@foxmail.com (Another available email: ZSCinYBSZ2023@outlook.com)",
     url="https://github.com/ZhouSicheng-2011/bit7z-python",
     license="Apache-2.0",
     description="Python bindings for bit7z",
