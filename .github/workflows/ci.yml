@@ -25,7 +25,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: x86_64
@@ -62,7 +62,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: aarch64
@@ -120,7 +120,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
           CIBW_ARCHS: AMD64
 
       - name: Upload artifacts
@@ -148,7 +148,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
           CIBW_ARCHS: arm64
           CIBW_ENVIRONMENT: >
             DYLD_LIBRARY_PATH=${{ github.workspace }}/include/dist:$DYLD_LIBRARY_PATH
@@ -185,7 +185,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-*"
+          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
           CIBW_ARCHS: x86_64
           CIBW_ENVIRONMENT: >
             DYLD_LIBRARY_PATH=${{ github.workspace }}/include/dist:$DYLD_LIBRARY_PATH
