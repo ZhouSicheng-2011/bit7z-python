@@ -6,8 +6,8 @@ on:
       - "v*" 
 
 jobs:
-  build_wheels_linux:
-    name: Build wheels on Linux
+  build_wheels_linux_x64:
+    name: Build wheels on Linux (x86_64)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,16 +16,16 @@ jobs:
         env:
           BIT7Z_VER: "4.1.0"
         run: |
-          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
-          tar -xvf bit7z-${BIT7Z_VER}-linux-gcc.tar.gz
-          mv bit7z-${BIT7Z_VER} bit7z-linux-gcc
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc-x64.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-linux-gcc-x64.tar.gz
+          mv bit7z-${BIT7Z_VER} bit7z-linux-gcc-x64
           mkdir -p bit7z_python/7zip
           cp 7zip/7z.so bit7z_python/7zip/7z.so
         
       - name: CI build wheels
-        uses: pypa/cibuildwheel@v4.1.0
+        uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
+          CIBW_BUILD: "cp311-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: x86_64
@@ -43,8 +43,45 @@ jobs:
           name: wheels-${{ runner.os }}-${{ runner.arch }}
           path: ./wheelhouse/*.whl
 
-  build_wheels_windows:
-    name: Build wheels on Windows
+  build_wheels_linux_arm64:
+    name: Build wheels on Linux (ARM64)
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bit7z x64 pre-built package
+        env:
+          BIT7Z_VER: "4.1.0"
+        run: |
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-linux-gcc-arm64.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-linux-gcc-arm64.tar.gz
+          mv bit7z-${BIT7Z_VER} bit7z-linux-gcc-arm64
+          mkdir -p bit7z_python/7zip
+          cp 7zip/7z.so bit7z_python/7zip/7z.so
+        
+      - name: CI build wheels
+        uses: pypa/cibuildwheel@v4.2.0
+        env:
+          CIBW_BUILD: "cp311-*"
+          CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
+          CIBW_SKIP: "*-musllinux_*"
+          CIBW_ARCHS: aarch64
+          CIBW_ENVIRONMENT: "LD_LIBRARY_PATH=/project/include/dist:$LD_LIBRARY_PATH"
+          # Build cross-platform system API library pyos
+          CIBW_BEFORE_ALL: >
+            cd include && 
+            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release && 
+            cmake --build ./build -j 1 --config Release && 
+            cd ..
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ runner.os }}-${{ runner.arch }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_windows_x64:
+    name: Build wheels on Windows (x86_64)
     runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
@@ -54,9 +91,9 @@ jobs:
         env:
           BIT7Z_VER: "4.1.0"
         run: |
-          curl -L -o bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v$env:BIT7Z_VER/bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
-          tar -xvf bit7z-$env:BIT7Z_VER-windows-msvc.tar.gz
-          mv bit7z-$env:BIT7Z_VER bit7z-windows-msvc
+          curl -L -o bit7z-$env:BIT7Z_VER-windows-msvc-x64.tar.gz https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v$env:BIT7Z_VER/bit7z-$env:BIT7Z_VER-windows-msvc-x64.tar.gz
+          tar -xvf bit7z-$env:BIT7Z_VER-windows-msvc-x64.tar.gz
+          mv bit7z-$env:BIT7Z_VER bit7z-windows-msvc-x64
           mkdir -Force bit7z_python/7zip
           cp 7zip/7z.dll bit7z_python/7zip/7z.dll
       
@@ -81,10 +118,84 @@ jobs:
           cd ..
         
       - name: CI build wheels
-        uses: pypa/cibuildwheel@v4.1.0
+        uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp39-* cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-*"
-          CIBW_ARCHS: auto64
+          CIBW_BUILD: "cp311-*"
+          CIBW_ARCHS: AMD64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ runner.os }}-${{ runner.arch }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_macos_arm64:
+    name: Build wheels on macOS (ARM64)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bit7z macOS pre-built package
+        env:
+          BIT7Z_VER: "4.1.0"
+        run: |
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-macos-arm64.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-macos-arm64.tar.gz
+          mv bit7z-${BIT7Z_VER} bit7z-macos-arm64
+          mkdir -p bit7z_python/7zip
+          cp 7zip/7z.dylib bit7z_python/7zip/7z.dylib
+        
+      - name: CI build wheels
+        uses: pypa/cibuildwheel@v4.2.0
+        env:
+          CIBW_BUILD: "cp311-*"
+          CIBW_ARCHS: arm64
+          CIBW_ENVIRONMENT: >
+            DYLD_LIBRARY_PATH=${{ github.workspace }}/include/dist:$DYLD_LIBRARY_PATH
+            MACOSX_DEPLOYMENT_TARGET=10.15
+          # Build cross-platform system API library pyos
+          CIBW_BEFORE_ALL: >
+            cd include && 
+            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_CXX_STANDARD=17 && 
+            cmake --build ./build -j 1 --config Release && 
+            cd ..
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ runner.os }}-${{ runner.arch }}
+          path: ./wheelhouse/*.whl
+
+  build_wheels_macos_x64:
+    name: Build wheels on macOS (x86_64)
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download bit7z macOS pre-built package
+        env:
+          BIT7Z_VER: "4.1.0"
+        run: |
+          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-macos-x64.tar.gz
+          tar -xvf bit7z-${BIT7Z_VER}-macos-x64.tar.gz
+          mv bit7z-${BIT7Z_VER} bit7z-macos-x64
+          mkdir -p bit7z_python/7zip
+          cp 7zip/7z.dylib bit7z_python/7zip/7z.dylib
+        
+      - name: CI build wheels
+        uses: pypa/cibuildwheel@v4.2.0
+        env:
+          CIBW_BUILD: "cp311-*"
+          CIBW_ARCHS: x86_64
+          CIBW_ENVIRONMENT: >
+            DYLD_LIBRARY_PATH=${{ github.workspace }}/include/dist:$DYLD_LIBRARY_PATH
+            MACOSX_DEPLOYMENT_TARGET=10.15
+          # Build cross-platform system API library pyos
+          CIBW_BEFORE_ALL: >
+            cd include && 
+            cmake -S . -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_CXX_STANDARD=17 && 
+            cmake --build ./build -j 1 --config Release && 
+            cd ..
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -94,7 +205,7 @@ jobs:
 
   release:
     name: Create GitHub Release and upload wheels
-    needs: [build_wheels_linux, build_wheels_windows]   # 等待构建完成
+    needs: [build_wheels_linux_x64, build_wheels_linux_arm64, build_wheels_windows_x64, build_wheels_macos_x64, build_wheels_macos_arm64]   # 等待构建完成
     runs-on: ubuntu-latest
     # 关键权限：创建 Release 需要写权限
     permissions:
@@ -108,12 +219,11 @@ jobs:
 
       - name: Flatten wheel files
         run: |
-          find dist/ -name "*.whl" -exec mv {} dist/ \;
+          find dist/ -name "*.whl" -exec mv {} wheels/ \;
           # 显示所有 wheel 文件（调试用）
-          ls -la dist/
-          rm -rf dist/wheels-Linux-X64
-          rm -rf dist/wheels-Windows-X64
-          ls -la dist/
+          ls -la wheels
+          rm -rf dist
+          ls -la
       
       - name: Download CHANGELOG.md
         run: |
@@ -130,11 +240,11 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
           files: |
-            ./dist/*.whl
+            ./wheels/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete CHAGELOG.md
+      - name: Delete CHANGELOG.md
         run: |
           rm CHANGELOG.md
           ls -la

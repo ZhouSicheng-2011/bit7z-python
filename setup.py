@@ -23,7 +23,7 @@ except:
     pass
 
 if platform.system() == "Windows" and platform.machine() == "AMD64":
-    bit7z_type = "windows-msvc"
+    bit7z_type = "windows-msvc-x64"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["/O2", "/favor:blend", "/std:c++17", "/utf-8", \
                  f"/DVER_MAJOR={ver_major}", f"/DVER_MINOR={ver_minor}", \
@@ -37,7 +37,7 @@ if platform.system() == "Windows" and platform.machine() == "AMD64":
     deps = ["7zip/7z.dll", "pyos.dll"]
 
 elif platform.system() == "Linux" and platform.machine() == "x86_64":
-    bit7z_type = "linux-gcc"
+    bit7z_type = "linux-gcc-x64"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["-O3", "-std=c++17", \
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
@@ -49,7 +49,7 @@ elif platform.system() == "Linux" and platform.machine() == "x86_64":
     ]
     deps = ["7zip/7z.so"]
 elif platform.system() == "Linux" and platform.machine() == "aarch64":
-    bit7z_type = "linux-gcc"
+    bit7z_type = "linux-gcc-arm64"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/arm64"
     cpp_flags = ["-O3", "-std=c++17", \
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
@@ -62,7 +62,7 @@ elif platform.system() == "Linux" and platform.machine() == "aarch64":
     deps = ["7zip/7z.so"]
 
 elif platform.system() == "Darwin" and platform.machine() == "arm64":
-    bit7z_type = "macos"
+    bit7z_type = "macos-arm64"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/arm64"
     cpp_flags = ["-O3", "-std=c++17", \
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \
@@ -73,7 +73,7 @@ elif platform.system() == "Darwin" and platform.machine() == "arm64":
     ]
     deps = ["7zip/7z.dylib"]
 elif platform.system() == "Darwin" and platform.machine() == "x86_64":
-    bit7z_type = "macos"
+    bit7z_type = "macos-x64"
     bit7z_lib_dir = f"bit7z-{bit7z_type}/lib/x64"
     cpp_flags = ["-O3", "-std=c++17", \
                  f"-DVER_MAJOR={ver_major}", f"-DVER_MINOR={ver_minor}", \

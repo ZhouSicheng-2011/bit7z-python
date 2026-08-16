@@ -9,7 +9,9 @@ The Support of bit7z in Python
 
 
 ## 🚀 Usage
-To install, just simply use this command:
+
+### Install
+To install on normal platfroms _(including `Windows x64`, `Linux x64/ARM64`, `MacOS x64/ARM64`)_, just simply use this command:
 ```sh
 pip install bit7z-python
 ```
@@ -61,6 +63,8 @@ Compared to pure‑Python alternatives like `py7zr`, `bit7z‑python` delivers *
 ![py7zr compression](./screenshots/pc.jpg)
 ![bit7z-python compression](./screenshots/bc.jpg)
 
+### Some notice about this test
+
 _Notice: Speedup figures are from our test environment; on other hardware (e.g., Core i5‑1135G7) the speedup was about 2.3x. The key takeaway is that bit7z‑python consistently outperforms py7zr by 2.2~2.3x or more across platforms._
 
 Test archives are located in the `test/` directory of this repository:  
@@ -81,6 +85,9 @@ However, the first release [has published](https://github.com/ZhouSicheng-2011/b
 - Upgrade bit7z to v4.1.0
 - API compatibility updates (no breaking changes)
 - Performance improvements from bit7z v4.1.0
+
+### v0.1.2 (Next Release)
+- Let GitHub Actions build all wheels on normal platforms: `Linux x64/arm64`, `Windows x64`, `MacOS arm64/x64`
 
 ### v0.2.0 ~ v1.0.0
 - [ ] `BitArchiveEditor` — edit existing archives (add/remove/update)
