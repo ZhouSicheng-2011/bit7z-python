@@ -219,6 +219,7 @@ jobs:
 
       - name: Flatten wheel files
         run: |
+          mkdir wheels
           find dist/ -name "*.whl" -exec mv {} wheels/ \;
           # 显示所有 wheel 文件（调试用）
           ls -la wheels
