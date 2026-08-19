@@ -1,3 +1,5 @@
+"""
+"""
 from __future__ import annotations
 from bit7z_python.bit7z_python import ArchiveStartOffset
 from bit7z_python.bit7z_python import Bit7zLibrary

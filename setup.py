@@ -12,12 +12,34 @@ README = (HERE / "README.md").read_text(encoding="utf-8")
 
 ver_major = 0
 ver_minor = 1
-ver_patch = 2
+ver_patch = 3
 __version__ = f"{ver_major}.{ver_minor}.{ver_patch}"
+
+classifiers = [
+    # Project status
+    "Development Status :: 4 - Beta",
+    # Intended Audience
+    "Intended Audience :: Developers",
+    # License
+    "License :: OSI Approved :: Apache Software License",
+    # Supported OS
+    "Operating System :: OS Independent",
+    # Supported Python versions
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    #Topic
+    "Topic :: System :: Archiving",
+    "Topic :: System :: Archiving :: Compression",
+]
 
 macros = [("VERSION_INFO", __version__)]
 try:
-    if sys._is_gil_enabled() == False:
+    if sys._is_gil_enabled() == False: # type: ignore
         macros.append(("PYTHON_313_PLUS_FREE_THREADING_BUILD", ""))
 except:
     pass
@@ -108,7 +130,7 @@ setup(
     name="bit7z_python",
     version=__version__,
     author="ZhouSicheng-2011",
-    author_email="csdc3946gh@foxmail.com (Another available email: ZSCinYBSZ2023@outlook.com)",
+    author_email="csdc3946gh@foxmail.com",
     url="https://github.com/ZhouSicheng-2011/bit7z-python",
     license="Apache-2.0",
     description="Python bindings for bit7z",
@@ -121,5 +143,6 @@ setup(
     packages=["bit7z_python"],
     package_data={
         "bit7z_python": deps
-    }
+    },
+    classifiers=classifiers
 )

@@ -15,7 +15,7 @@ To install on normal platfroms _(including `Windows x64`, `Linux x64/ARM64`, `Ma
 ```sh
 pip install bit7z-python
 ```
-To verify install *(⚠️Not available in `v0.0.1` becuase there is a minor bug)*, run:
+To verify install, run:
 ```sh
 python -c "import bit7z_python; print(bit7z_python.__version__)"
 ``` 
@@ -25,7 +25,7 @@ python -c "import bit7z_python; print(bit7z_python.__version__)"
 ```python
 import bit7z_python as b7z
 
-lib = b7z.Bit7zLibrary()
+lib = b7z.Bit7zLibrary(bit7z_python.default_7zip_lib_path)
 compressor = b7z.BitFileCompressor(lib, b7z.FORMAT_7Z)
 
 # 压缩整个目录
