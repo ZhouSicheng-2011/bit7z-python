@@ -1,0 +1,5 @@
+[wrap-git]
+url = https://github.com/rikyoz/bit7z.git
+revision = v4.1.0
+depth = 1
+method = cmake

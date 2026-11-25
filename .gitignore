@@ -1,8 +1,8 @@
-#Object files
+# Object files
 .obj
 .o
 
-#Build directorys
+# Build directorys
 build/
 dist/
 CMakeFiles/
@@ -10,15 +10,19 @@ CMakeCache.txt
 *.egg-info/
 *.pyd
 
-#VS Code Configurations
+# VS Code Configurations
 #.vscode/
 
-#Python Virtual Environment
+# Python Virtual Environment
 env*/
 
-#Python .pyc cache
+# Python .pyc cache
 __pycache__/
 
-#Loacl libs
+# Loacl libs
 bit7z-*/
 7zip/
+
+# Meson Wrap Files
+/subprojects/*
+!/subprojects/*.wrap

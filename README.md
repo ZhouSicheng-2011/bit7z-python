@@ -81,13 +81,11 @@ However, the first release [has published](https://github.com/ZhouSicheng-2011/b
 ## 🗺️ Roadmap
 
 
-### v0.1.1 (This Release)
-- Upgrade bit7z to v4.1.0
-- API compatibility updates (no breaking changes)
-- Performance improvements from bit7z v4.1.0
+### v0.1.3 (This Release)
+- [ ] Fix `7z.so` / `7z.dylib` loading bug on Unix-like systems (In this release, please use `bit7z_python.default_7zip_lib_path` instead of using `"7z.so"` / `"7z.dylib` as the argument of `bit7z_python.Bit7zLibrary`)
 
-### v0.1.2 (Next Release)
-- Let GitHub Actions build all wheels on normal platforms: `Linux x64/arm64`, `Windows x64`, `MacOS arm64/x64`
+### v0.1.4 (Next Release)
+- Use Meson as the build system of this project
 
 ### v0.2.0 ~ v1.0.0
 - [ ] `BitArchiveEditor` — edit existing archives (add/remove/update)
