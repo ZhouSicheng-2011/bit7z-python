@@ -35,6 +35,7 @@ bit7z_opts = cmake.subproject_options()
 bit7z_opts.add_cmake_defines({
     'BIT7Z_AUTO_FORMAT': 'ON',
     'BIT7Z_REGEX_MATCHING': 'ON',
+    'BIT7Z_INSTALL': 'OFF',
     'CMAKE_BUILD_TYPE': 'Release',
     'CMAKE_POSITION_INDEPENDENT_CODE': 'ON'
 })
