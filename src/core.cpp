@@ -11,12 +11,12 @@ License: This project is under the Apache-2.0 Lincense, see LICENSE for more det
 #include <API.hpp>
 
 //Include binding files
-#include <Enums_EVP.cpp>
-#include <Bit7zLibrary_EVP.cpp>
-#include <BitFormat_EVP.cpp>
-#include <BitFileExtractor_EVP.cpp>
-#include <BitFileCompressor_EVP.cpp>
-#include <BitArchiveItem_EVP.cpp>
+#include "Enums_EVP.cpp"
+#include "Bit7zLibrary_EVP.cpp"
+#include "BitFormat_EVP.cpp"
+#include "BitFileExtractor_EVP.cpp"
+#include "BitFileCompressor_EVP.cpp"
+#include "BitArchiveItem_EVP.cpp"
 
 //Main module
 #ifdef PYTHON_NO_GIL

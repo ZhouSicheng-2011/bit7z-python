@@ -79,9 +79,11 @@ std::map<std::string, std::string> dict_to_string_map(const py::dict& d) {
 using bit7z::tstring;
 
 //My headers
+/*
 #include <pyos.hpp>
 #include <sysinfo.hpp>
 #include <time.hpp>
+*/
 
 #ifdef PYTHON_313_PLUS_FREE_THREADING_BUILD
 #define PYTHON_NO_GIL
