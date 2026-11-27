@@ -85,7 +85,7 @@ using bit7z::tstring;
 #include <time.hpp>
 */
 
-#ifdef PYTHON_313_PLUS_FREE_THREADING_BUILD
+#ifdef Py_GIL_DISABLED
 #define PYTHON_NO_GIL
 #endif
 

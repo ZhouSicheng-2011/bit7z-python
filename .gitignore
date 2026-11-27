@@ -9,6 +9,7 @@ CMakeFiles/
 CMakeCache.txt
 *.egg-info/
 *.pyd
+.mesonpy-*/
 
 # VS Code Configurations
 #.vscode/
