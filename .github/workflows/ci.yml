@@ -25,7 +25,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-* cp314t-*"
+          CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-* cp315-* cp315t-*"
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: x86_64
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download bit7z x64 pre-built package
+      - name: Download bit7z arm64 pre-built package
         env:
           BIT7Z_VER: "4.1.0"
         run: |
@@ -55,7 +55,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-* cp314t-*"
+          CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-* cp315-* cp315t-*"
           CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
           CIBW_SKIP: "*-musllinux_*"
           CIBW_ARCHS: aarch64
@@ -92,7 +92,7 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-* cp314t-*"
+          CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-* cp315-* cp315t-*"
           CIBW_ARCHS: AMD64
 
       - name: Upload artifacts
@@ -120,38 +120,8 @@ jobs:
       - name: CI build wheels
         uses: pypa/cibuildwheel@v4.2.0
         env:
-          CIBW_BUILD: "cp311-* cp314t-*"
+          CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-* cp314t-* cp315-* cp315t-*"
           CIBW_ARCHS: arm64
-          CIBW_ENVIRONMENT: >
-            MACOSX_DEPLOYMENT_TARGET=11.0
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-${{ runner.os }}-${{ runner.arch }}
-          path: ./wheelhouse/*.whl
-
-  build_wheels_macos_x64:
-    name: Build wheels on macOS (x86_64)
-    runs-on: macos-15-intel
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download bit7z macOS pre-built package
-        env:
-          BIT7Z_VER: "4.1.0"
-        run: |
-          wget https://github.com/ZhouSicheng-2011/software-build/releases/download/bit7z-v${BIT7Z_VER}/bit7z-${BIT7Z_VER}-macos-x64.tar.gz
-          tar -xvf bit7z-${BIT7Z_VER}-macos-x64.tar.gz
-          mv bit7z-${BIT7Z_VER} bit7z-macos-x64
-          mkdir -p bit7z_python/7zip
-          cp 7zip/7z.dylib bit7z_python/7zip/7z.dylib
-        
-      - name: CI build wheels
-        uses: pypa/cibuildwheel@v4.2.0
-        env:
-          CIBW_BUILD: "cp311-* cp314t-*"
-          CIBW_ARCHS: x86_64
           CIBW_ENVIRONMENT: >
             MACOSX_DEPLOYMENT_TARGET=11.0
 
@@ -163,7 +133,7 @@ jobs:
 
   release:
     name: Create GitHub Release and upload wheels
-    needs: [build_wheels_linux_x64, build_wheels_linux_arm64, build_wheels_windows_x64, build_wheels_macos_x64, build_wheels_macos_arm64]   # 等待构建完成
+    needs: [build_wheels_linux_x64, build_wheels_linux_arm64, build_wheels_windows_x64, build_wheels_macos_arm64]   # 等待构建完成
     runs-on: ubuntu-latest
     # 关键权限：创建 Release 需要写权限
     permissions:
